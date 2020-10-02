@@ -1,0 +1,84 @@
+<div
+  class="search-results"
+  infiniteScroll
+  [infiniteScrollDistance]="0.5"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="onScroll()"
+>
+  <div *ngIf="tvShowDict" class="container py-4">
+    <form class="form-group" [formGroup]="queryGenreForm" (ngSubmit)="search()">
+      <div class="row justify-content-center">
+        <select
+          class="form-control custom-select search-input-group-bar mb-3"
+          formControlName="genre"
+        >
+          <option value="" disabled>{{ "Genres" | translate }}</option>
+          <option *ngFor="let genre of genres" [ngValue]="genre.id">
+            {{ genre.name }}
+          </option>
+        </select>
+      </div>
+      <div class="row justify-content-center">
+        <select
+          class="form-control custom-select search-input-group-bar mb-3"
+          formControlName="sortingType"
+        >
+          <option value="" disabled>{{ "sorting_types" | translate }}</option>
+          <option *ngFor="let sort of sortingTypes" [ngValue]="sort.value">
+            {{ sort.name }}
+          </option>
+        </select>
+      </div>
+      <div class="row justify-content-center">
+        <button class="btn btn-secondary" type="submit">
+          <fa-icon class="mr-2" [icon]="faSSearch"></fa-icon>
+          {{ "search" | translate }}
+        </button>
+      </div>
+    </form>
+
+    <div class="row justify-content-center">
+      <div *ngFor="let t of tvShows" class="p-2 text-center">
+        <div class="tv-show-card card bg-dark text-light hvr-grow">
+          <div class="card-header p-1 m-0 border-0">
+            <a routerLink="/discover/{{ t.id }}/details">
+              <img
+                src="{{ t.poster_path }}"
+                alt="card-poster"
+                class="poster-img rounded"
+                width="100%"
+                height="200px"
+              />
+            </a>
+          </div>
+          <div class="card-body p-2 border-0">
+            <h6 class="card-title text-truncate mb-2">{{ t.name }}</h6>
+            <button
+              *ngIf="!tvShowDict[t.id]"
+              class="btn btn-success btn-sm btn-block"
+              (click)="addToCollection(t.id)"
+            >
+              <fa-icon [icon]="faSPlusCircle"></fa-icon>
+            </button>
+            <button
+              *ngIf="tvShowDict[t.id]"
+              class="btn btn-danger btn-sm btn-block"
+              (click)="removeFromCollection(t.id)"
+            >
+              <fa-icon [icon]="faSMinusCircle"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="!!tvShowDict && !!tvShows && !lastResultReached"
+    class="row justify-content-center"
+  >
+    <button class="btn btn-primary" (click)="loadMoreOnButtonPressed()">
+      <fa-icon class="mr-2" [icon]="faSStream"></fa-icon>
+      {{ "load_more" | translate }}
+    </button>
+  </div>
+</div>

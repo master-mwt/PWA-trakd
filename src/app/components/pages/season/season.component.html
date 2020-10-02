@@ -1,0 +1,218 @@
+<div *ngIf="tvShowDict && Season" class="container py-4">
+  <div class="row">
+    <div class="col mx-1">
+      <a
+        href="javascript:void(0)"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-secondary mb-3"
+        role="button"
+        (click)="goBack()"
+      >
+        <fa-icon class="mr-1" [icon]="faSArrowCircleLeft"></fa-icon>
+        {{ "back" | translate }}
+      </a>
+      <a
+        *ngIf="tvShowDict[Season.tv_show_id] && !allEpisodesMarked"
+        href="javascript:void(0)"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3"
+        role="button"
+        (click)="markAllEpisodes(true)"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_all_as_seen" | translate }}
+      </a>
+      <a
+        *ngIf="!tvShowDict[Season.tv_show_id]"
+        href="javascript:void(0)"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3 disabled shadow-none"
+        role="button"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_all_as_seen" | translate }}
+      </a>
+      <a
+        *ngIf="tvShowDict[Season.tv_show_id] && allEpisodesMarked"
+        href="javascript:void(0)"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-danger mb-3"
+        role="button"
+        (click)="markAllEpisodes(false)"
+      >
+        <fa-icon class="mr-1" [icon]="faMinusCircle"></fa-icon>
+        {{ "mark_all_as_unseen" | translate }}
+      </a>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-dark p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ Season.name }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <img
+        *ngIf="Season.poster_path"
+        src="{{ Season.poster_path }}"
+        alt=""
+        class="rounded info-poster-img"
+        width="100%"
+        height="250px"
+      />
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "info" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <table class="table rounded m-0 p-0" style="background-color: #dddddd">
+        <tbody>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "overview" | translate }}
+            </td>
+            <td class="border-0">{{ Season.overview }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="container px-1">
+    <div
+      class="col d-flex flex-row mb-3 rounded justify-content-around py-3"
+      style="background-color: #dddddd"
+    >
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSTv"></fa-icon>
+        </h4>
+        <span class="text-muted">{{ "season" | translate }}</span>
+        <h6 class="p-0 m-0">{{ Season.season_number }}</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSListUl"></fa-icon>
+        </h4>
+        <h6 class="p-0 m-0">{{ Season.episode_count }}</h6>
+        <span class="text-muted">{{ "episodes" | translate }}</span>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSHistory"></fa-icon>
+        </h4>
+        <span class="text-muted">{{ "last_air_date" | translate }}</span>
+        <h6 class="p-0 m-0">{{ Season.air_date }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "progress" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="rounded p-3" style="background-color: #dddddd">
+        <h6 class="text-center">
+          {{ episodeCounter }} / {{ Season.episode_count }}
+        </h6>
+        <div class="progress" style="background-color: #cccccc">
+          <div id="progress_bar" class="progress-bar" role="progressbar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "episodes" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div
+        *ngFor="let e of Season.episodes"
+        class="d-flex flex-column justify-content-center"
+      >
+        <div
+          class="d-flex flex-row justify-content-between rounded p-1 mb-2"
+          style="background-color: #dddddd"
+        >
+          <div class="d-flex flex-row">
+            <img
+              *ngIf="e.still_path"
+              src="{{ e.still_path }}"
+              alt=""
+              class="rounded info-poster-img mr-3"
+              width="50px"
+              height="50px"
+            />
+            <div class="d-flex flex-column align-items-start">
+              <div class="d-flex flex-row">
+                <span class="mr-2">{{ e.episode_number }}</span>
+                <a
+                  routerLink="/discover/{{
+                    Season.tv_show_id
+                  }}/details/season/{{ Season.season_number }}/episode/{{
+                    e.episode_number
+                  }}"
+                  class="text-truncate text-decoration-none"
+                >
+                  {{ e.name }}
+                </a>
+              </div>
+              <span class="text-muted text-dark text-truncate">{{
+                e.air_date
+              }}</span>
+            </div>
+          </div>
+          <button
+            *ngIf="
+              tvShowDict[Season.tv_show_id] &&
+              !tvShowDict[Season.tv_show_id].episodes[e.id]
+            "
+            type="button"
+            class="btn btn-sm btn-primary px-2"
+            (click)="markEpisode(e.id)"
+          >
+            <fa-icon [icon]="faSEye"></fa-icon>
+          </button>
+          <button
+            *ngIf="!tvShowDict[Season.tv_show_id]"
+            type="button"
+            class="btn btn-sm btn-primary px-2 disabled shadow-none"
+          >
+            <fa-icon [icon]="faSEye"></fa-icon>
+          </button>
+          <button
+            *ngIf="
+              tvShowDict[Season.tv_show_id] &&
+              tvShowDict[Season.tv_show_id].episodes[e.id]
+            "
+            type="button"
+            class="btn btn-sm btn-danger px-2"
+            (click)="markEpisode(e.id)"
+          >
+            <fa-icon [icon]="faSEyeSlash"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,180 @@
+<!-- temp nav struct -->
+<nav
+  class="navbar navbar-expand-md sticky-top navbar-dark bg-dark shadow-sm text-truncate"
+>
+  <div class="container">
+    <a href="" class="navbar-brand">
+      <img
+        src="assets/imgs/trakd_logo.svg"
+        alt="trakd_logo"
+        width="30"
+        height="30"
+        class="d-inline-block align-middle mr-1"
+      />
+      trakd
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar_main_menu"
+      aria-controls="navbar_main_menu"
+      aria-expanded="false"
+      aria-label="toggle navigation"
+    >
+      <!-- <span class="navbar-toggler-icon"></span> -->
+      <fa-icon [icon]="faSBars"></fa-icon>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar_main_menu">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="explore_dropdown_menu"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <fa-icon [icon]="faSCompass" class="mr-1"></fa-icon>
+            {{ "navbar_explore" | translate }}
+          </a>
+          <div
+            class="dropdown-menu bg-dark border-0"
+            aria-labelledby="explore_dropdown_menu"
+          >
+            <a class="dropdown-item" [routerLink]="['explore/popular']">
+              <fa-icon [icon]="faSTrophy" class="mr-1"></fa-icon>
+              {{ "navbar_popular" | translate }}
+            </a>
+            <a class="dropdown-item" [routerLink]="['explore/top_rated']">
+              <fa-icon [icon]="faSStar" class="mr-1"></fa-icon>
+              {{ "navbar_top_rated" | translate }}
+            </a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="explore_dropdown_menu"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <fa-icon [icon]="faSSearch" class="mr-1"></fa-icon>
+            {{ "navbar_search" | translate }}
+          </a>
+          <div
+            class="dropdown-menu bg-dark border-0"
+            aria-labelledby="explore_dropdown_menu"
+          >
+            <a class="dropdown-item" [routerLink]="['search']">
+              <fa-icon [icon]="faSThList" class="mr-1"></fa-icon>
+              {{ "navbar_search_by_name" | translate }}
+            </a>
+            <a class="dropdown-item" [routerLink]="['genres']">
+              <fa-icon [icon]="faSTh" class="mr-1"></fa-icon>
+              {{ "navbar_search_by_genre" | translate }}
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['collection']" class="nav-link">
+            <fa-icon [icon]="faSHeart" class="mr-1"></fa-icon>
+            {{ "navbar_collection" | translate }}
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a [routerLink]="['backup']" class="nav-link">
+            <fa-icon [icon]="faSSave" class="mr-1"></fa-icon>
+            {{ "navbar_backup" | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['info']" class="nav-link">
+            <fa-icon [icon]="faSInfoCircle" class="mr-1"></fa-icon>
+            {{ "navbar_info" | translate }}
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a
+            *ngIf="this.translate.currentLang === 'en'"
+            (click)="switchLang('it')"
+            href="javascript:void(0)"
+            class="nav-link"
+            style="opacity: 0.5"
+          >
+            <span class="flag-icon flag-icon-it"></span>
+          </a>
+          <a
+            *ngIf="this.translate.currentLang === 'it'"
+            (click)="switchLang('it')"
+            href="javascript:void(0)"
+            class="nav-link active"
+          >
+            <span class="flag-icon flag-icon-it"></span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="this.translate.currentLang === 'it'"
+            (click)="switchLang('en')"
+            href="javascript:void()"
+            class="nav-link"
+          >
+            <span style="opacity: 0.5" class="flag-icon flag-icon-gb"></span>
+          </a>
+          <a
+            *ngIf="this.translate.currentLang === 'en'"
+            (click)="switchLang('en')"
+            href="javascript:void()"
+            class="nav-link active"
+          >
+            <span class="flag-icon flag-icon-gb"></span>
+          </a>
+        </li>
+
+        <!--
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="lang_dropdown_menu"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <fa-icon [icon]="faSFlag" class="mr-1"></fa-icon>
+            lang
+          </a>
+          <div
+            class="dropdown-menu bg-dark border-0"
+            aria-labelledby="lang_dropdown_menu"
+          >
+            <a
+              (click)="switchLang('it')"
+              href="javascript:void(0)"
+              class="dropdown-item"
+            >
+              <fa-icon [icon]="faSFlag" class="mr-1"></fa-icon>
+              ita
+            </a>
+            <a
+              (click)="switchLang('en')"
+              href="javascript:void(0)"
+              class="dropdown-item"
+            >
+              <fa-icon [icon]="faSFlag" class="mr-1"></fa-icon>
+              eng
+            </a>
+          </div>
+        </li>
+        -->
+      </ul>
+    </div>
+  </div>
+</nav>

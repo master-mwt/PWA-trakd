@@ -1,0 +1,25 @@
+.poster-img {
+  object-fit: cover;
+}
+
+.tv-show-card {
+  width: 150px;
+}
+
+.search-input-group-prepend {
+  border-bottom-left-radius: 0.25rem !important;
+  border-top-left-radius: 0.25rem !important;
+  background-color: #cccccc;
+}
+
+.search-input-group-postpone {
+  border-bottom-right-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+  background-color: #cccccc;
+}
+
+.search-input-group-bar {
+  background-color: #dddddd;
+  outline: noe !important;
+  box-shadow: none !important;
+}

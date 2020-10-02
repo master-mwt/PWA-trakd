@@ -1,0 +1,136 @@
+<div *ngIf="!!Episode && !!tvShowDict" class="container py-4">
+  <div class="row">
+    <div class="col mx-1">
+      <a
+        href="javascript:void(0)"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-secondary mb-3"
+        role="button"
+        (click)="goBack()"
+      >
+        <fa-icon class="mr-1" [icon]="faSArrowCircleLeft"></fa-icon>
+        {{ "back" | translate }}
+      </a>
+      <a
+        *ngIf="
+          tvShowDict[Episode.tv_show_id] &&
+          !tvShowDict[Episode.tv_show_id].episodes[Episode.id]
+        "
+        href="javascript:void(0);"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3"
+        role="button"
+        (click)="markAsSeen()"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_as_seen" | translate }}
+      </a>
+      <a
+        *ngIf="!tvShowDict[Episode.tv_show_id]"
+        href="javascript:void(0);"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3 disabled"
+        role="button"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_as_seen" | translate }}
+      </a>
+      <a
+        *ngIf="
+          tvShowDict[Episode.tv_show_id] &&
+          tvShowDict[Episode.tv_show_id].episodes[Episode.id]
+        "
+        href="javascript:void(0);"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-danger mb-3"
+        role="button"
+        (click)="markAsNotSeen()"
+      >
+        <fa-icon class="mr-1" [icon]="faMinusCircle"></fa-icon>
+        {{ "mark_as_not_seen" | translate }}
+      </a>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-dark p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ Episode.name }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <img
+        *ngIf="Episode.still_path"
+        src="{{ Episode.still_path }}"
+        alt=""
+        class="rounded info-poster-img"
+        width="100%"
+        height="250px"
+      />
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "info" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <table class="table rounded m-0 p-0" style="background-color: #dddddd">
+        <tbody>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "overview" | translate }}
+            </td>
+            <td class="border-0">{{ Episode.overview }}</td>
+          </tr>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "last_air_date" | translate }}
+            </td>
+            <td class="border-0">{{ Episode.air_date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="container px-1">
+    <div
+      class="col d-flex flex-row mb-3 rounded justify-content-around py-3"
+      style="background-color: #dddddd"
+    >
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSTv"></fa-icon>
+        </h4>
+        <span class="text-muted">season</span>
+        <h6 class="p-0 m-0">{{ Episode.season_number }}</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSListUl"></fa-icon>
+        </h4>
+        <span class="text-muted">{{ "episode" | translate }}</span>
+        <h6 class="p-0 m-0">{{ Episode.episode_number }}</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSTrophy"></fa-icon>
+        </h4>
+        <span class="text-muted">{{ "vote_count" | translate }}</span>
+        <h6 class="p-0 m-0">{{ Episode.vote_count }}</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2">
+          <fa-icon [icon]="faSCrown"></fa-icon>
+        </h4>
+        <span class="text-muted">{{ "vote_average" | translate }}</span>
+        <h6 class="p-0 m-0">{{ Episode.vote_average }} / 10</h6>
+      </div>
+    </div>
+  </div>
+</div>

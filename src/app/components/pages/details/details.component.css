@@ -1,0 +1,16 @@
+.info-card-img {
+  object-fit: cover;
+}
+
+.info-poster-img {
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.card-poster-img {
+  object-fit: cover;
+}
+
+.tv-show-card {
+  width: 150px;
+}

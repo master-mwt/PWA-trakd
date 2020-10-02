@@ -1,0 +1,313 @@
+<div *ngIf="TvShowDetails" class="container py-4">
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <a
+        href="javascript:void(0)"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-secondary"
+        role="button"
+        (click)="goBack()"
+      >
+        <fa-icon class="mr-1" [icon]="faSArrowCircleLeft"></fa-icon>
+        {{ "back" | translate }}
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div *ngIf="!!tvShowDict && !!TvShowDetails" class="col mx-1">
+      <a
+        *ngIf="!!tvShowDict[TvShowDetails.id] && !allEpisodesMarked"
+        href="javascript:void(0)"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3"
+        role="button"
+        (click)="markAllEpisodes(true)"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_all_as_seen" | translate }}
+      </a>
+      <a
+        *ngIf="!tvShowDict[TvShowDetails.id]"
+        href="javascript:void(0)"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3 disabled"
+        role="button"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_all_as_seen" | translate }}
+      </a>
+      <a
+        *ngIf="!!tvShowDict[TvShowDetails.id] && allEpisodesMarked"
+        href="javascript:void(0)"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-danger mb-3"
+        role="button"
+        (click)="markAllEpisodes(false)"
+      >
+        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
+        {{ "mark_all_as_unseen" | translate }}
+      </a>
+      <a
+        *ngIf="!tvShowDict[TvShowDetails.id]"
+        href="javascript:void(0)"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-success mb-3"
+        role="button"
+        (click)="addToCollection()"
+      >
+        <fa-icon class="mr-1" [icon]="faPlusCircle"></fa-icon>
+        {{ "add_to_collection" | translate }}
+      </a>
+      <a
+        *ngIf="tvShowDict[TvShowDetails.id]"
+        href="javascript:void(0)"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-danger mb-3"
+        role="button"
+        (click)="removeFromCollection()"
+      >
+        <fa-icon class="mr-1" [icon]="faMinusCircle"></fa-icon>
+        {{ "remove_from_collection" | translate }}
+      </a>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-dark p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ TvShowDetails.name }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <img
+        src="{{ TvShowDetails.backdrop_path }}"
+        alt=""
+        class="rounded info-poster-img"
+        width="100%"
+        height="250px"
+      />
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "info" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <table class="table rounded m-0 p-0" style="background-color: #dddddd">
+        <tbody>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "overview" | translate }}
+            </td>
+            <td class="border-0">{{ TvShowDetails.overview }}</td>
+          </tr>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "status" | translate }}
+            </td>
+            <td class="border-0">{{ TvShowDetails.status }}</td>
+          </tr>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "type" | translate }}
+            </td>
+            <td class="border-0">{{ TvShowDetails.type }}</td>
+          </tr>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "seasons" | translate }}
+            </td>
+            <td class="border-0">
+              {{ TvShowDetails.number_of_seasons }}
+              <span class="text-muted">{{ "seasons" | translate }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "episodes" | translate }}
+            </td>
+            <td class="border-0">
+              {{ TvShowDetails.number_of_episodes }}
+              <span class="text-muted">{{ "episodes" | translate }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="border-0 font-weight-bold float-right">
+              {{ "genres" | translate }}
+            </td>
+            <td class="border-0">
+              <a
+                href="javascript:void(0)"
+                *ngFor="let g of TvShowDetails.genres"
+                class="text-decoration-none"
+                (click)="searchByGenre(g.id)"
+                >{{ g.name }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "social" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-1">
+    <div
+      class="col d-flex flex-row mb-3 rounded justify-content-around py-3"
+      style="background-color: #dddddd"
+    >
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2"><fa-icon [icon]="faSCrown"></fa-icon></h4>
+        <span class="text-muted">{{ "vote_average" | translate }}</span>
+        <h6 class="p-0 m-0">{{ TvShowDetails.vote_average }} / 10</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2"><fa-icon [icon]="faSStream"></fa-icon></h4>
+        <span class="text-muted">{{ "popularity" | translate }}</span>
+        <h6 class="p-0 m-0">{{ TvShowDetails.popularity }} %</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2"><fa-icon [icon]="faSTrophy"></fa-icon></h4>
+        <span class="text-muted">{{ "vote_count" | translate }}</span>
+        <h6 class="p-0 m-0">{{ TvShowDetails.vote_count }}</h6>
+      </div>
+      <div class="d-flex flex-column text-center hvr-bob">
+        <h4 class="p-0 m-0 mb-2"><fa-icon [icon]="faSFlagUsa"></fa-icon></h4>
+        <span class="text-muted">{{ "language" | translate }}</span>
+        <h6 class="p-0 m-0">{{ TvShowDetails.original_language }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "seasons" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mb-3">
+    <div class="row text-center justify-content-center">
+      <div *ngFor="let s of TvShowDetails.seasons" class="p-2 text-center">
+        <div class="tv-show-card card bg-dark text-light hvr-grow">
+          <div class="card-header p-1 m-0 border-0">
+            <a
+              routerLink="/discover/{{ TvShowDetails.id }}/details/season/{{
+                s.season_number
+              }}"
+            >
+              <img
+                src="{{ s.poster_path }}"
+                alt="card-poster"
+                class="card-poster-img rounded"
+                width="100%"
+                height="200px"
+              />
+            </a>
+          </div>
+          <div class="card-body p-2 border-0">
+            <h6 class="card-title text-truncate mb-1">{{ s.name }}</h6>
+            <span
+              *ngIf="s.marked_episodes"
+              class="card-text text-muted text-truncate"
+            >
+              {{ s.marked_episodes }} / {{ s.episode_count }}
+            </span>
+            <span
+              *ngIf="!s.marked_episodes"
+              class="card-text text-muted text-truncate"
+            >
+              0 / {{ s.episode_count }}
+            </span>
+            <!-- temp progress bar -->
+            <div
+              class="progress mt-2"
+              style="height: 10px; background-color: #dddddd"
+            >
+              <div
+                id="progress_bar_{{ s.season_number }}"
+                class="progress-bar"
+                role="progressbar"
+              ></div>
+            </div>
+            <!-- temp progress bar -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "cast" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mb-3">
+    <div class="row text-center justify-content-center">
+      <div *ngFor="let c of Cast" class="p-2 text-center">
+        <div class="tv-show-card card bg-dark text-light">
+          <div class="card-header p-1 m-0 border-0">
+            <img
+              src="{{ c.profile_path }}"
+              alt="card-poster"
+              class="card-poster-img rounded"
+              width="100%"
+              height="200px"
+            />
+          </div>
+          <div class="card-body p-2 border-0">
+            <h6 class="card-title text-truncate m-0">{{ c.name }}</h6>
+            <p class="card-text text-muted text-truncate mb-1">
+              {{ c.character }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col mx-1">
+      <div class="bg-secondary p-1 rounded text-center text-light">
+        <h6 class="m-0">{{ "similar_shows" | translate }}</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mb-3">
+    <div class="row text-center justify-content-center">
+      <div *ngFor="let t of tvShowPreviews" class="p-2 text-center">
+        <div class="tv-show-card card bg-dark text-light hvr-grow">
+          <div class="card-header p-1 m-0 border-0">
+            <a routerLink="/discover/{{ t.id }}/details">
+              <img
+                src="{{ t.poster_path }}"
+                alt="card-poster"
+                class="card-poster-img rounded"
+                width="100%"
+                height="200px"
+              />
+            </a>
+          </div>
+          <div class="card-body p-2 border-0">
+            <h6 class="card-title text-truncate m-0">{{ t.name }}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
