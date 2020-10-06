@@ -2,11 +2,13 @@ import { Action } from '@ngrx/store';
 import { Collection } from '../domain/Collection';
 import { Episode } from '../domain/Episode';
 import { Season } from '../domain/Season';
+import { TvShowDetails } from '../domain/TvShowDetails';
 import { TvShowPreview } from '../domain/TvShowPreview';
 
 export enum ECollectionActions {
   UPDATE_COLLECTION = 'UPDATE_COLLECTION',
   ADD_TO_COLLECTION = 'ADD_TO_COLLECTION',
+  ADD_TO_COLLECTION_SUCCESS = 'ADD_TO_COLLECTION_SUCCESS',
   REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION',
   MARK_ALL_EPISODES_AS_SEEN = 'MARK_ALL_EPISODES_AS_SEEN',
   MARK_ALL_EPISODES_AS_UNSEEN = 'MARK_ALL_EPISODES_AS_UNSEEN',
@@ -21,12 +23,12 @@ export class UpdateCollectionAction implements Action {
 
 export class AddToCollectionAction implements Action {
   readonly type = ECollectionActions.ADD_TO_COLLECTION;
-  constructor(public payload: TvShowPreview) {}
+  constructor(public payload: TvShowDetails) {}
 }
 
 export class RemoveFromCollectionAction implements Action {
   readonly type = ECollectionActions.REMOVE_FROM_COLLECTION;
-  constructor(public payload: TvShowPreview) {}
+  constructor(public payload: TvShowPreview | TvShowDetails) {}
 }
 
 export class MarkAllEpisodesAsSeenAction implements Action {
@@ -49,6 +51,11 @@ export class MarkEpisodeAsNotSeenAction implements Action {
   constructor(public payload: Episode) {}
 }
 
+export class AddToCollectionSuccessAction implements Action {
+  readonly type = ECollectionActions.ADD_TO_COLLECTION_SUCCESS;
+  constructor(public payload: Season[]) {}
+}
+
 export type ALL_REDUCER_ACTIONS =
   | UpdateCollectionAction
   | AddToCollectionAction
@@ -56,4 +63,5 @@ export type ALL_REDUCER_ACTIONS =
   | MarkAllEpisodesAsSeenAction
   | MarkAllEpisodesAsNotSeenAction
   | MarkEpisodeAsSeenAction
-  | MarkEpisodeAsNotSeenAction;
+  | MarkEpisodeAsNotSeenAction
+  | AddToCollectionSuccessAction;

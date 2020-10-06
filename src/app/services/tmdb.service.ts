@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { combineLatest, Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 
 import { PageResult } from '../domain/PageResult';
@@ -243,6 +243,21 @@ export class TmdbService {
     return this.http
       .get<GenreResult>(link)
       .pipe(retry(3), catchError(this.handleError));
+  }
+
+  /**
+   * Get all seasons for a TvShow
+   *
+   * @param tvShowDetails The TvShow object
+   */
+  getAllTvShowSeasons(tvShowDetails: TvShowDetails): Observable<Season[]> {
+    let seasonObservables: Observable<Season>[] = [];
+    for (let season of tvShowDetails.seasons) {
+      seasonObservables.push(
+        this.getTvShowSeason(tvShowDetails.id, season.season_number)
+      );
+    }
+    return combineLatest([...seasonObservables]);
   }
 
   /**

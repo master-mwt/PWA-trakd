@@ -22,6 +22,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { appReducers } from './reducers/app.reducer';
+import { CollectionEffects } from './effects/collection-effects.service';
 
 @NgModule({
   declarations: [
@@ -52,8 +54,8 @@ import { EffectsModule } from '@ngrx/effects';
         deps: [HttpClient],
       },
     }),
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([CollectionEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],
