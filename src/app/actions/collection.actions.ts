@@ -1,8 +1,17 @@
 import { Action } from '@ngrx/store';
 import { Collection } from '../domain/Collection';
+import { Episode } from '../domain/Episode';
+import { Season } from '../domain/Season';
+import { TvShowPreview } from '../domain/TvShowPreview';
 
 export enum ECollectionActions {
   UPDATE_COLLECTION = 'UPDATE_COLLECTION',
+  ADD_TO_COLLECTION = 'ADD_TO_COLLECTION',
+  REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION',
+  MARK_ALL_EPISODES_AS_SEEN = 'MARK_ALL_EPISODES_AS_SEEN',
+  MARK_ALL_EPISODES_AS_UNSEEN = 'MARK_ALL_EPISODES_AS_UNSEEN',
+  MARK_EPISODE_AS_SEEN = 'MARK_EPISODE_AS_SEEN',
+  MARK_EPISODE_AS_UNSEEN = 'MARK_EPISODE_AS_UNSEEN',
 }
 
 export class UpdateCollectionAction implements Action {
@@ -10,4 +19,41 @@ export class UpdateCollectionAction implements Action {
   constructor(public payload: Collection) {}
 }
 
-export type ALL_REDUCER_ACTIONS = UpdateCollectionAction;
+export class AddToCollectionAction implements Action {
+  readonly type = ECollectionActions.ADD_TO_COLLECTION;
+  constructor(public payload: TvShowPreview) {}
+}
+
+export class RemoveFromCollectionAction implements Action {
+  readonly type = ECollectionActions.REMOVE_FROM_COLLECTION;
+  constructor(public payload: TvShowPreview) {}
+}
+
+export class MarkAllEpisodesAsSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_ALL_EPISODES_AS_SEEN;
+  constructor(public payload: Season) {}
+}
+
+export class MarkAllEpisodesAsNotSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_ALL_EPISODES_AS_UNSEEN;
+  constructor(public payload: Season) {}
+}
+
+export class MarkEpisodeAsSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_EPISODE_AS_SEEN;
+  constructor(public payload: Episode) {}
+}
+
+export class MarkEpisodeAsNotSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_EPISODE_AS_UNSEEN;
+  constructor(public payload: Episode) {}
+}
+
+export type ALL_REDUCER_ACTIONS =
+  | UpdateCollectionAction
+  | AddToCollectionAction
+  | RemoveFromCollectionAction
+  | MarkAllEpisodesAsSeenAction
+  | MarkAllEpisodesAsNotSeenAction
+  | MarkEpisodeAsSeenAction
+  | MarkEpisodeAsNotSeenAction;
