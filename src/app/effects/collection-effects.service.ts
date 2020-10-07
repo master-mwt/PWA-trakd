@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, ofType } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { TmdbService } from '../services/tmdb.service';
 export class CollectionEffects {
   constructor(private actions$: Actions, private tmdbService: TmdbService) {}
 
+  @Effect()
   addTvShowToCollection: Observable<Action> = this.actions$.pipe(
     ofType<AddToCollectionAction>(ECollectionActions.ADD_TO_COLLECTION),
     switchMap((action: AddToCollectionAction) => {

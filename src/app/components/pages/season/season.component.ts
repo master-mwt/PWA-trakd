@@ -17,6 +17,16 @@ import { Season } from 'src/app/domain/Season';
 import * as $ from 'jquery';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import { selectCollection } from 'src/app/selectors/collection.selector';
+import {
+  MarkAllSeasonEpisodesAsNotSeenAction,
+  MarkAllSeasonEpisodesAsSeenAction,
+  MarkEpisodeAsNotSeenAction,
+  MarkEpisodeAsSeenAction,
+} from 'src/app/actions/collection.actions';
+import { Episode } from 'src/app/domain/Episode';
 
 @Component({
   selector: 'app-season',
@@ -33,14 +43,25 @@ export class SeasonComponent implements OnInit, OnDestroy {
   propEpisodeCounter: number = null;
 
   private langChangeSubscription: any;
+  private collectionSelectorSubscription: any;
 
   constructor(
     private router: Router,
     private location: Location,
     private TmdbService: TmdbService,
     private title: Title,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private store: Store<IAppState>
+  ) {
+    this.collectionSelectorSubscription = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.tvShowDict = collection;
+        if (this.tvShowDict === null) {
+          this.tvShowDict = {};
+        }
+      });
+  }
 
   private setTitle(res) {
     if (this.translate.currentLang === 'it') {
@@ -58,8 +79,6 @@ export class SeasonComponent implements OnInit, OnDestroy {
     let tv_show_id = +parsedUrl.root.children.primary.segments[1].path;
     let season_number = +parsedUrl.root.children.primary.segments[4].path;
 
-    this.initCollection();
-
     this.downloadData(tv_show_id, season_number);
 
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
@@ -71,6 +90,7 @@ export class SeasonComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSelectorSubscription.unsubscribe();
   }
 
   private downloadData(tv_show_id, season_number) {
@@ -102,6 +122,8 @@ export class SeasonComponent implements OnInit, OnDestroy {
         //episodes[]
         if (res.episodes) {
           res.episodes.forEach((episode) => {
+            episode.tv_show_id = tv_show_id;
+
             //still_path
             if (episode.still_path) {
               episode.still_path =
@@ -123,15 +145,6 @@ export class SeasonComponent implements OnInit, OnDestroy {
         this.checkAllMarked();
       }
     );
-  }
-
-  private initCollection(): void {
-    let collection = localStorage.getItem('collection');
-    if (collection) {
-      this.tvShowDict = JSON.parse(collection);
-    } else {
-      this.tvShowDict = {};
-    }
   }
 
   private checkAllMarked(): void {
@@ -175,44 +188,72 @@ export class SeasonComponent implements OnInit, OnDestroy {
   }
 
   markEpisode(id: number): void {
-    if (
+    /*if (
       !!this.tvShowDict[this.Season.tv_show_id] &&
       !this.tvShowDict[this.Season.tv_show_id].episodes &&
       !!this.Season.episodes
     ) {
       this.tvShowDict[this.Season.tv_show_id].episodes = {};
-    }
+    }*/
     if (
       !!this.tvShowDict[this.Season.tv_show_id] &&
       !!this.tvShowDict[this.Season.tv_show_id].episodes &&
       !!this.Season.episodes
     ) {
-      this.tvShowDict[this.Season.tv_show_id].episodes[id] = !this.tvShowDict[
+      /*this.tvShowDict[this.Season.tv_show_id].episodes[id] = !this.tvShowDict[
         this.Season.tv_show_id
       ].episodes[id];
       this.checkAllMarked();
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      if (this.tvShowDict[this.Season.tv_show_id].episodes[id] === false) {
+        // mark as seen
+        let episodeToBeMarked = this.Season.episodes.filter(
+          (episode: Episode) => {
+            return episode.id === id;
+          }
+        );
+        this.store.dispatch(new MarkEpisodeAsSeenAction(episodeToBeMarked[0]));
+      } else {
+        // mark as not seen
+        let episodeToBeMarked = this.Season.episodes.filter(
+          (episode: Episode) => {
+            return episode.id === id;
+          }
+        );
+        this.store.dispatch(
+          new MarkEpisodeAsNotSeenAction(episodeToBeMarked[0])
+        );
+      }
+      this.checkAllMarked();
     }
   }
 
   markAllEpisodes(value: boolean): void {
-    if (
+    /*if (
       !!this.tvShowDict[this.Season.tv_show_id] &&
       !this.tvShowDict[this.Season.tv_show_id].episodes &&
       !!this.Season.episodes
     ) {
       this.tvShowDict[this.Season.tv_show_id].episodes = {};
-    }
+    }*/
     if (
       !!this.tvShowDict[this.Season.tv_show_id] &&
       !!this.tvShowDict[this.Season.tv_show_id].episodes &&
       !!this.Season.episodes
     ) {
-      for (let episode of this.Season.episodes) {
+      /*for (let episode of this.Season.episodes) {
         this.tvShowDict[this.Season.tv_show_id].episodes[episode.id] = value;
       }
       this.checkAllMarked();
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      if (value) {
+        this.store.dispatch(new MarkAllSeasonEpisodesAsSeenAction(this.Season));
+      } else {
+        this.store.dispatch(
+          new MarkAllSeasonEpisodesAsNotSeenAction(this.Season)
+        );
+      }
+      this.checkAllMarked();
     }
   }
 

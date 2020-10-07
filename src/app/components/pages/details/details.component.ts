@@ -18,7 +18,15 @@ import { TvShowPreview } from 'src/app/domain/TvShowPreview';
 import { TvShowDetails } from 'src/app/domain/TvShowDetails';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { event } from 'jquery';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import { selectCollection } from 'src/app/selectors/collection.selector';
+import {
+  AddToCollectionAction,
+  MarkAllTvShowEpisodesAsNotSeenAction,
+  MarkAllTvShowEpisodesAsSeenAction,
+  RemoveFromCollectionAction,
+} from 'src/app/actions/collection.actions';
 
 @Component({
   selector: 'app-details',
@@ -33,6 +41,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   allEpisodesMarked: boolean = false;
 
   private langChangeSubscription: any;
+  private collectionSelectorSubscription: any;
 
   constructor(
     private router: Router,
@@ -40,8 +49,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
     private TmdbService: TmdbService,
     private activeRoute: ActivatedRoute,
     private title: Title,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private store: Store<IAppState>
+  ) {
+    this.collectionSelectorSubscription = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.tvShowDict = collection;
+        if (this.tvShowDict === null) {
+          this.tvShowDict = {};
+        }
+      });
+  }
 
   private setTitle(res) {
     if (this.translate.currentLang === 'it') {
@@ -81,6 +100,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSelectorSubscription.unsubscribe();
   }
 
   private downloadData(tv_show_id) {
@@ -141,7 +161,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
       this.TvShowDetails = res;
 
-      this.initCollection();
+      this.checkAllMarked();
     });
     //cast[]
     this.TmdbService.getTvShowCredits(tv_show_id).subscribe((res) => {
@@ -181,16 +201,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.tvShowPreviews = res.results;
       }
     });
-  }
-
-  private initCollection(): void {
-    let collection = localStorage.getItem('collection');
-    if (collection) {
-      this.tvShowDict = JSON.parse(collection);
-    } else {
-      this.tvShowDict = {};
-    }
-    this.checkAllMarked();
   }
 
   private checkAllMarked(): void {
@@ -254,7 +264,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   addToCollection(): void {
-    if (this.tvShowDict) {
+    /*if (this.tvShowDict) {
       this.tvShowDict[this.TvShowDetails.id] = {
         episodes: {},
       };
@@ -270,13 +280,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
         });
       }
       this.checkAllMarked();
-    }
+    }*/
+    this.store.dispatch(new AddToCollectionAction(this.TvShowDetails));
+    this.checkAllMarked();
   }
 
   removeFromCollection(): void {
     if (!!this.tvShowDict && this.tvShowDict[this.TvShowDetails.id]) {
-      delete this.tvShowDict[this.TvShowDetails.id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      /*delete this.tvShowDict[this.TvShowDetails.id];
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      this.store.dispatch(new RemoveFromCollectionAction(this.TvShowDetails));
     }
   }
 
@@ -286,12 +299,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.tvShowDict[this.TvShowDetails.id] &&
       !!this.tvShowDict[this.TvShowDetails.id].episodes
     ) {
-      for (let episodeKey of Object.keys(
+      /*for (let episodeKey of Object.keys(
         this.tvShowDict[this.TvShowDetails.id].episodes
       )) {
         this.tvShowDict[this.TvShowDetails.id].episodes[episodeKey] = value;
       }
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      if (value) {
+        // mark
+        this.store.dispatch(
+          new MarkAllTvShowEpisodesAsSeenAction(this.TvShowDetails)
+        );
+      } else {
+        // unmark
+        this.store.dispatch(
+          new MarkAllTvShowEpisodesAsNotSeenAction(this.TvShowDetails)
+        );
+      }
       this.checkAllMarked();
     }
   }

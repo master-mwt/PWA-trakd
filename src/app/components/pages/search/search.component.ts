@@ -11,6 +11,13 @@ import { TvShowPreview } from 'src/app/domain/TvShowPreview';
 import { Collection } from 'src/app/domain/Collection';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import { selectCollection } from 'src/app/selectors/collection.selector';
+import {
+  AddToCollectionAction,
+  RemoveFromCollectionAction,
+} from 'src/app/actions/collection.actions';
 
 @Component({
   selector: 'app-search',
@@ -34,11 +41,13 @@ export class SearchComponent implements OnInit, OnDestroy {
   lastResultReached: boolean = true;
 
   private langChangeSubscription: any;
+  private collectionSubscription: any;
 
   constructor(
     private tmdbService: TmdbService,
     private title: Title,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private store: Store<IAppState>
   ) {
     this.setTitle();
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
@@ -46,6 +55,14 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.setTitle();
       }
     );
+    this.collectionSubscription = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.tvShowDict = collection;
+        if (this.tvShowDict === null) {
+          this.tvShowDict = {};
+        }
+      });
   }
 
   private setTitle() {
@@ -56,12 +73,11 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {
-    this.initCollection();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSubscription.unsubscribe();
   }
 
   search(): void {
@@ -86,15 +102,6 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.bindResults(res.results);
         }
       });
-  }
-
-  private initCollection(): void {
-    let collection = localStorage.getItem('collection');
-    if (collection) {
-      this.tvShowDict = JSON.parse(collection);
-    } else {
-      this.tvShowDict = {};
-    }
   }
 
   onScroll(): void {
@@ -142,7 +149,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   addToCollection(id: number): void {
-    if (this.tvShowDict) {
+    /*if (this.tvShowDict) {
       this.tvShowDict[id] = {
         episodes: {},
       };
@@ -161,13 +168,17 @@ export class SearchComponent implements OnInit, OnDestroy {
             });
         }
       });
-    }
+    }*/
+    this.tmdbService.getTvShowDetails(id).subscribe((res) => {
+      this.store.dispatch(new AddToCollectionAction(res));
+    });
   }
 
   removeFromCollection(id: number): void {
     if (!!this.tvShowDict && !!this.tvShowDict[id]) {
-      delete this.tvShowDict[id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      /*delete this.tvShowDict[id];
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      this.store.dispatch(new RemoveFromCollectionAction({ id: id, name: '' }));
     }
   }
 

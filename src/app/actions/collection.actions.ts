@@ -10,8 +10,10 @@ export enum ECollectionActions {
   ADD_TO_COLLECTION = 'ADD_TO_COLLECTION',
   ADD_TO_COLLECTION_SUCCESS = 'ADD_TO_COLLECTION_SUCCESS',
   REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION',
-  MARK_ALL_EPISODES_AS_SEEN = 'MARK_ALL_EPISODES_AS_SEEN',
-  MARK_ALL_EPISODES_AS_UNSEEN = 'MARK_ALL_EPISODES_AS_UNSEEN',
+  MARK_ALL_SEASON_EPISODES_AS_SEEN = 'MARK_ALL_SEASON_EPISODES_AS_SEEN',
+  MARK_ALL_SEASON_EPISODES_AS_UNSEEN = 'MARK_ALL_SEASON_EPISODES_AS_UNSEEN',
+  MARK_ALL_TV_SHOW_EPISODES_AS_SEEN = 'MARK_ALL_TV_SHOW_EPISODES_AS_SEEN',
+  MARK_ALL_TV_SHOW_EPISODES_AS_UNSEEN = 'MARK_ALL_TV_SHOW_EPISODES_AS_UNSEEN',
   MARK_EPISODE_AS_SEEN = 'MARK_EPISODE_AS_SEEN',
   MARK_EPISODE_AS_UNSEEN = 'MARK_EPISODE_AS_UNSEEN',
 }
@@ -31,14 +33,24 @@ export class RemoveFromCollectionAction implements Action {
   constructor(public payload: TvShowPreview | TvShowDetails) {}
 }
 
-export class MarkAllEpisodesAsSeenAction implements Action {
-  readonly type = ECollectionActions.MARK_ALL_EPISODES_AS_SEEN;
+export class MarkAllSeasonEpisodesAsSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_ALL_SEASON_EPISODES_AS_SEEN;
   constructor(public payload: Season) {}
 }
 
-export class MarkAllEpisodesAsNotSeenAction implements Action {
-  readonly type = ECollectionActions.MARK_ALL_EPISODES_AS_UNSEEN;
+export class MarkAllSeasonEpisodesAsNotSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_ALL_SEASON_EPISODES_AS_UNSEEN;
   constructor(public payload: Season) {}
+}
+
+export class MarkAllTvShowEpisodesAsSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_ALL_TV_SHOW_EPISODES_AS_SEEN;
+  constructor(public payload: TvShowDetails) {}
+}
+
+export class MarkAllTvShowEpisodesAsNotSeenAction implements Action {
+  readonly type = ECollectionActions.MARK_ALL_TV_SHOW_EPISODES_AS_UNSEEN;
+  constructor(public payload: TvShowDetails) {}
 }
 
 export class MarkEpisodeAsSeenAction implements Action {
@@ -60,8 +72,10 @@ export type ALL_REDUCER_ACTIONS =
   | UpdateCollectionAction
   | AddToCollectionAction
   | RemoveFromCollectionAction
-  | MarkAllEpisodesAsSeenAction
-  | MarkAllEpisodesAsNotSeenAction
+  | MarkAllSeasonEpisodesAsSeenAction
+  | MarkAllSeasonEpisodesAsNotSeenAction
+  | MarkAllTvShowEpisodesAsSeenAction
+  | MarkAllTvShowEpisodesAsNotSeenAction
   | MarkEpisodeAsSeenAction
   | MarkEpisodeAsNotSeenAction
   | AddToCollectionSuccessAction;

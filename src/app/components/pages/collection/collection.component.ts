@@ -11,6 +11,10 @@ import { Collection } from 'src/app/domain/Collection';
 import * as fuzzysort from 'fuzzysort';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import { selectCollection } from 'src/app/selectors/collection.selector';
+import { RemoveFromCollectionAction } from 'src/app/actions/collection.actions';
 
 @Component({
   selector: 'app-collection',
@@ -25,17 +29,26 @@ export class CollectionComponent implements OnInit, OnDestroy {
   query: FormControl = new FormControl('');
 
   private langChangeSubscription: any;
+  private collectionSubscription: any;
 
   constructor(
     private tmdbService: TmdbService,
     private title: Title,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private store: Store<IAppState>
   ) {
     this.setTitle();
+    this.collectionSubscription = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.tvShowDict = collection;
+        if (this.tvShowDict === null) {
+          this.tvShowDict = {};
+        }
+      });
   }
 
   ngOnInit(): void {
-    this.initCollection();
     this.refreshCollection();
     this.searchInit();
 
@@ -50,6 +63,7 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSubscription.unsubscribe();
   }
 
   private setTitle() {
@@ -57,15 +71,6 @@ export class CollectionComponent implements OnInit, OnDestroy {
       this.title.setTitle('Naviga la tua personale collezione di serie tv');
     } else {
       this.title.setTitle('Browse your personal collection of tvshows');
-    }
-  }
-
-  private initCollection(): void {
-    let collection = localStorage.getItem('collection');
-    if (collection) {
-      this.tvShowDict = JSON.parse(collection);
-    } else {
-      this.tvShowDict = {};
     }
   }
 
@@ -106,8 +111,9 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   removeFromCollection(id: number): void {
     if (!!this.tvShowDict && !!this.tvShowDict[id]) {
-      delete this.tvShowDict[id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      /*delete this.tvShowDict[id];
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      this.store.dispatch(new RemoveFromCollectionAction({ id: id, name: '' }));
     }
     this.refreshCollection();
   }

@@ -16,6 +16,13 @@ import { Collection } from 'src/app/domain/Collection';
 import { Episode } from 'src/app/domain/Episode';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import { selectCollection } from 'src/app/selectors/collection.selector';
+import {
+  MarkEpisodeAsNotSeenAction,
+  MarkEpisodeAsSeenAction,
+} from 'src/app/actions/collection.actions';
 
 @Component({
   selector: 'app-episode',
@@ -27,14 +34,25 @@ export class EpisodeComponent implements OnInit, OnDestroy {
   tvShowDict: Collection = null;
 
   private langChangeSubscription: any;
+  private collectionSubscription: any;
 
   constructor(
     private router: Router,
     private location: Location,
     private TmdbService: TmdbService,
     private title: Title,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private store: Store<IAppState>
+  ) {
+    this.collectionSubscription = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.tvShowDict = collection;
+        if (this.tvShowDict === null) {
+          this.tvShowDict = {};
+        }
+      });
+  }
 
   private setTitle(res) {
     if (this.translate.currentLang === 'it') {
@@ -53,8 +71,6 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     let season_number = +parsedUrl.root.children.primary.segments[4].path;
     let episode_number = +parsedUrl.root.children.primary.segments[6].path;
 
-    this.initCollection();
-
     this.downloadData(tv_show_id, season_number, episode_number);
 
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
@@ -66,6 +82,7 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSubscription.unsubscribe();
   }
 
   private downloadData(tv_show_id, season_number, episode_number) {
@@ -105,32 +122,24 @@ export class EpisodeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private initCollection(): void {
-    let collection = localStorage.getItem('collection');
-    if (collection) {
-      this.tvShowDict = JSON.parse(collection);
-    } else {
-      this.tvShowDict = {};
-    }
-  }
-
   markAsSeen(): void {
     if (this.tvShowDict[this.Episode.tv_show_id]) {
-      if (!this.tvShowDict[this.Episode.tv_show_id].episodes) {
+      /*if (!this.tvShowDict[this.Episode.tv_show_id].episodes) {
         this.tvShowDict[this.Episode.tv_show_id].episodes = {};
-      }
-      if (!this.tvShowDict[this.Episode.tv_show_id].episodes[this.Episode.id]) {
+      }*/
+      /*if (!this.tvShowDict[this.Episode.tv_show_id].episodes[this.Episode.id]) {
         this.tvShowDict[this.Episode.tv_show_id].episodes[
           this.Episode.id
         ] = true;
         localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
-      }
+      }*/
+      this.store.dispatch(new MarkEpisodeAsSeenAction(this.Episode));
     }
   }
 
   markAsNotSeen(): void {
     if (this.tvShowDict[this.Episode.tv_show_id]) {
-      if (
+      /*if (
         !!this.tvShowDict[this.Episode.tv_show_id].episodes &&
         this.tvShowDict[this.Episode.tv_show_id].episodes[this.Episode.id]
       ) {
@@ -138,7 +147,8 @@ export class EpisodeComponent implements OnInit, OnDestroy {
           this.Episode.id
         ] = false;
         localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
-      }
+      }*/
+      this.store.dispatch(new MarkEpisodeAsNotSeenAction(this.Episode));
     }
   }
 

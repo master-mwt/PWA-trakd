@@ -24,6 +24,7 @@
       >
         <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
         {{ "mark_all_as_seen" | translate }}
+        (bugged)
       </a>
       <a
         *ngIf="!tvShowDict[TvShowDetails.id]"
@@ -33,6 +34,7 @@
       >
         <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
         {{ "mark_all_as_seen" | translate }}
+        (bugged)
       </a>
       <a
         *ngIf="!!tvShowDict[TvShowDetails.id] && allEpisodesMarked"
@@ -43,6 +45,7 @@
       >
         <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
         {{ "mark_all_as_unseen" | translate }}
+        (bugged)
       </a>
       <a
         *ngIf="!tvShowDict[TvShowDetails.id]"

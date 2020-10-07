@@ -14,7 +14,12 @@ export function collectionReducer(
   // TODO: remove debug logs
   switch (action.type) {
     case ECollectionActions.ADD_TO_COLLECTION_SUCCESS:
-      collection = state.collection;
+      collection = JSON.parse(JSON.stringify(state.collection));
+
+      if (collection === null) {
+        collection = {};
+      }
+
       seasons = action.payload;
       collection[seasons[0].tv_show_id] = { episodes: {} };
       for (let season of seasons) {
@@ -31,7 +36,7 @@ export function collectionReducer(
       };
 
     case ECollectionActions.REMOVE_FROM_COLLECTION:
-      collection = state.collection;
+      collection = JSON.parse(JSON.stringify(state.collection));
       delete collection[action.payload.id];
 
       console.log(collection);
@@ -41,12 +46,10 @@ export function collectionReducer(
         collection: collection,
       };
 
-    case ECollectionActions.MARK_ALL_EPISODES_AS_SEEN:
-      collection = state.collection;
-      for (let episodeKey of Object.keys(
-        collection[action.payload.tv_show_id].episodes
-      )) {
-        collection[action.payload.tv_show_id].episodes[episodeKey] = true;
+    case ECollectionActions.MARK_ALL_SEASON_EPISODES_AS_SEEN:
+      collection = JSON.parse(JSON.stringify(state.collection));
+      for (let episode of action.payload.episodes) {
+        collection[action.payload.tv_show_id].episodes[episode.id] = true;
       }
 
       console.log(collection);
@@ -56,12 +59,40 @@ export function collectionReducer(
         collection: collection,
       };
 
-    case ECollectionActions.MARK_ALL_EPISODES_AS_UNSEEN:
-      collection = state.collection;
+    case ECollectionActions.MARK_ALL_SEASON_EPISODES_AS_UNSEEN:
+      collection = JSON.parse(JSON.stringify(state.collection));
+      for (let episode of action.payload.episodes) {
+        collection[action.payload.tv_show_id].episodes[episode.id] = false;
+      }
+
+      console.log(collection);
+
+      return {
+        ...state,
+        collection: collection,
+      };
+
+    case ECollectionActions.MARK_ALL_TV_SHOW_EPISODES_AS_SEEN:
+      collection = JSON.parse(JSON.stringify(state.collection));
       for (let episodeKey of Object.keys(
-        collection[action.payload.tv_show_id].episodes
+        collection[action.payload.id].episodes
       )) {
-        collection[action.payload.tv_show_id].episodes[episodeKey] = false;
+        collection[action.payload.id].episodes[episodeKey] = true;
+      }
+
+      console.log(collection);
+
+      return {
+        ...state,
+        collection: collection,
+      };
+
+    case ECollectionActions.MARK_ALL_TV_SHOW_EPISODES_AS_UNSEEN:
+      collection = JSON.parse(JSON.stringify(state.collection));
+      for (let episodeKey of Object.keys(
+        collection[action.payload.id].episodes
+      )) {
+        collection[action.payload.id].episodes[episodeKey] = false;
       }
 
       console.log(collection);
@@ -72,7 +103,7 @@ export function collectionReducer(
       };
 
     case ECollectionActions.MARK_EPISODE_AS_SEEN:
-      collection = state.collection;
+      collection = JSON.parse(JSON.stringify(state.collection));
       collection[action.payload.tv_show_id].episodes[action.payload.id] = true;
 
       console.log(collection);
@@ -83,7 +114,7 @@ export function collectionReducer(
       };
 
     case ECollectionActions.MARK_EPISODE_AS_UNSEEN:
-      collection = state.collection;
+      collection = JSON.parse(JSON.stringify(state.collection));
       collection[action.payload.tv_show_id].episodes[action.payload.id] = false;
 
       console.log(collection);
@@ -96,5 +127,4 @@ export function collectionReducer(
     default:
       return state;
   }
-  return state;
 }

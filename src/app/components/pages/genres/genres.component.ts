@@ -14,6 +14,13 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import { selectCollection } from 'src/app/selectors/collection.selector';
+import {
+  AddToCollectionAction,
+  RemoveFromCollectionAction,
+} from 'src/app/actions/collection.actions';
 
 @Component({
   selector: 'app-genres',
@@ -47,15 +54,25 @@ export class GenresComponent implements OnInit, OnDestroy {
   navigation = null;
 
   private langChangeSubscription: any;
+  private collectionSubscription: any;
 
   constructor(
     private tmdbService: TmdbService,
     private router: Router,
     private title: Title,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private store: Store<IAppState>
   ) {
     this.navigation = this.router.getCurrentNavigation();
     this.setTitle();
+    this.collectionSubscription = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.tvShowDict = collection;
+        if (this.tvShowDict === null) {
+          this.tvShowDict = {};
+        }
+      });
   }
 
   private setTitle() {
@@ -67,8 +84,6 @@ export class GenresComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initCollection();
-
     this.downloadData();
 
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
@@ -81,6 +96,7 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSubscription.unsubscribe();
   }
 
   private downloadData() {
@@ -129,15 +145,6 @@ export class GenresComponent implements OnInit, OnDestroy {
           this.bindResults(res.results);
         }
       });
-  }
-
-  private initCollection(): void {
-    let collection = localStorage.getItem('collection');
-    if (collection) {
-      this.tvShowDict = JSON.parse(collection);
-    } else {
-      this.tvShowDict = {};
-    }
   }
 
   search() {
@@ -214,7 +221,7 @@ export class GenresComponent implements OnInit, OnDestroy {
   }
 
   addToCollection(id: number): void {
-    if (this.tvShowDict) {
+    /*if (this.tvShowDict) {
       this.tvShowDict[id] = {
         episodes: {},
       };
@@ -233,13 +240,17 @@ export class GenresComponent implements OnInit, OnDestroy {
             });
         }
       });
-    }
+    }*/
+    this.tmdbService.getTvShowDetails(id).subscribe((res) => {
+      this.store.dispatch(new AddToCollectionAction(res));
+    });
   }
 
   removeFromCollection(id: number): void {
     if (!!this.tvShowDict && !!this.tvShowDict[id]) {
-      delete this.tvShowDict[id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
+      /*delete this.tvShowDict[id];
+      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
+      this.store.dispatch(new RemoveFromCollectionAction({ id: id, name: '' }));
     }
   }
 
