@@ -11,6 +11,8 @@ import { SeasonComponent } from './components/pages/season/season.component';
 import { CollectionComponent } from './components/pages/collection/collection.component';
 import { GenresComponent } from './components/pages/genres/genres.component';
 import { InfoComponent } from './components/pages/info/info.component';
+import { AuthGuardService } from './auth/auth-guard.service';
+import { LoginComponent } from './components/pages/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'explore/popular', pathMatch: 'full' },
@@ -31,6 +33,17 @@ const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
   { path: 'backup', component: BackupComponent },
   { path: 'info', component: InfoComponent },
+  { path: 'login', component: LoginComponent },
+  // protected routes
+  {
+    path: 'logged',
+    loadChildren: () =>
+      import('./components/logged/logged.module').then(
+        (mod) => mod.LoggedModule
+      ),
+    canActivate: [AuthGuardService],
+  },
+  // invalid routes
   { path: '**', component: NotfoundComponent },
 ];
 
@@ -38,4 +51,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+  constructor() {
+    console.log('AppRoutingModule initiliazed');
+  }
+}

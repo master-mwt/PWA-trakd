@@ -24,6 +24,19 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { appReducers } from './reducers/app.reducer';
 import { CollectionEffects } from './effects/collection-effects.service';
+import { LoginComponent } from './components/pages/login/login.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { LoginResult } from './domain/LoginResult';
+import { AppConstants } from './app.constants';
+
+export function tokenGetter() {
+  const loginStored: LoginResult = JSON.parse(
+    localStorage.getItem(AppConstants.LOGIN_STORAGE)
+  );
+  if (loginStored !== undefined && loginStored !== null) {
+    return loginStored.token;
+  }
+}
 
 @NgModule({
   declarations: [
@@ -39,6 +52,7 @@ import { CollectionEffects } from './effects/collection-effects.service';
     BackupComponent,
     GenresComponent,
     InfoComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +70,12 @@ import { CollectionEffects } from './effects/collection-effects.service';
     }),
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([CollectionEffects]),
+    // is this right ?
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+      },
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

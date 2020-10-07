@@ -6,7 +6,8 @@ import { TvShowDetails } from '../domain/TvShowDetails';
 import { TvShowPreview } from '../domain/TvShowPreview';
 
 export enum ECollectionActions {
-  UPDATE_COLLECTION = 'UPDATE_COLLECTION',
+  REFRESH_COLLECTION = 'REFRESH_COLLECTION',
+  REFRESH_COLLECTION_SUCCESS = 'REFRESH_COLLECTION_SUCCESS',
   ADD_TO_COLLECTION = 'ADD_TO_COLLECTION',
   ADD_TO_COLLECTION_SUCCESS = 'ADD_TO_COLLECTION_SUCCESS',
   REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION',
@@ -18,8 +19,13 @@ export enum ECollectionActions {
   MARK_EPISODE_AS_UNSEEN = 'MARK_EPISODE_AS_UNSEEN',
 }
 
-export class UpdateCollectionAction implements Action {
-  readonly type = ECollectionActions.UPDATE_COLLECTION;
+export class RefreshCollectionAction implements Action {
+  readonly type = ECollectionActions.REFRESH_COLLECTION;
+  // TODO: must have username ?
+}
+
+export class RefreshCollectionSuccessAction implements Action {
+  readonly type = ECollectionActions.REFRESH_COLLECTION_SUCCESS;
   constructor(public payload: Collection) {}
 }
 
@@ -69,7 +75,8 @@ export class AddToCollectionSuccessAction implements Action {
 }
 
 export type ALL_REDUCER_ACTIONS =
-  | UpdateCollectionAction
+  | RefreshCollectionAction
+  | RefreshCollectionSuccessAction
   | AddToCollectionAction
   | RemoveFromCollectionAction
   | MarkAllSeasonEpisodesAsSeenAction

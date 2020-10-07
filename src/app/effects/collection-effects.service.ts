@@ -7,13 +7,21 @@ import {
   AddToCollectionAction,
   AddToCollectionSuccessAction,
   ECollectionActions,
+  RefreshCollectionAction,
+  RefreshCollectionSuccessAction,
 } from '../actions/collection.actions';
+import { Collection } from '../domain/Collection';
 import { Season } from '../domain/Season';
+import { LocalserverService } from '../services/localserver.service';
 import { TmdbService } from '../services/tmdb.service';
 
 @Injectable()
 export class CollectionEffects {
-  constructor(private actions$: Actions, private tmdbService: TmdbService) {}
+  constructor(
+    private actions$: Actions,
+    private tmdbService: TmdbService,
+    private localserverService: LocalserverService
+  ) {}
 
   @Effect()
   addTvShowToCollection: Observable<Action> = this.actions$.pipe(
@@ -30,6 +38,15 @@ export class CollectionEffects {
     }),
     switchMap((seasons: Season[]) =>
       of(new AddToCollectionSuccessAction(seasons))
+    )
+  );
+
+  @Effect()
+  refreshCollection: Observable<Action> = this.actions$.pipe(
+    ofType<RefreshCollectionAction>(ECollectionActions.REFRESH_COLLECTION),
+    switchMap(() => this.localserverService.getUserCollection()),
+    switchMap((collection: Collection) =>
+      of(new RefreshCollectionSuccessAction(collection))
     )
   );
 }

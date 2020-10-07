@@ -12,9 +12,10 @@ import { SortingTypes } from '../domain/SortingTypes';
 import { Genre } from '../domain/Genre';
 import { GenreResult } from '../domain/GenreResult';
 import { TranslateService } from '@ngx-translate/core';
+import { AppConstants } from '../app.constants';
 
-const API_URL = 'https://api.themoviedb.org/3/';
-const API_KEY = '609fbad41366e27a4f7a58d8d1760a3b';
+const API_URL = AppConstants.TMDB_SERVICE_API_URL;
+const API_KEY = AppConstants.TMDB_SERVICE_API_KEY;
 
 @Injectable({
   providedIn: 'root',

@@ -13,6 +13,14 @@ export function collectionReducer(
 
   // TODO: remove debug logs
   switch (action.type) {
+    case ECollectionActions.REFRESH_COLLECTION_SUCCESS:
+      console.log(action.payload);
+
+      return {
+        ...state,
+        collection: action.payload,
+      };
+
     case ECollectionActions.ADD_TO_COLLECTION_SUCCESS:
       collection = JSON.parse(JSON.stringify(state.collection));
 
