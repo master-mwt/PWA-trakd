@@ -23,7 +23,10 @@ export class TokenInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     console.log('Http request intercepted!');
 
-    if (req.url.startsWith(AppConstants.SERVER_URL)) {
+    if (
+      req.url.startsWith(AppConstants.SERVER_URL) &&
+      !req.url.includes('auth')
+    ) {
       console.log('Http request change!');
       req = req.clone({
         setHeaders: {
