@@ -9,6 +9,8 @@ import {
   ECollectionActions,
   RefreshCollectionAction,
   RefreshCollectionSuccessAction,
+  SaveCollectionAction,
+  SaveCollectionSuccessAction,
 } from '../actions/collection.actions';
 import { Collection } from '../domain/Collection';
 import { Season } from '../domain/Season';
@@ -47,6 +49,17 @@ export class CollectionEffects {
     switchMap(() => this.localserverService.getUserCollection()),
     switchMap((collection: Collection) =>
       of(new RefreshCollectionSuccessAction(collection))
+    )
+  );
+
+  @Effect()
+  saveCollection: Observable<Action> = this.actions$.pipe(
+    ofType<SaveCollectionAction>(ECollectionActions.SAVE_COLLECTION),
+    switchMap((action: SaveCollectionAction) =>
+      this.localserverService.saveCollection(action.payload)
+    ),
+    switchMap((collection: Collection) =>
+      of(new SaveCollectionSuccessAction(collection))
     )
   );
 }
