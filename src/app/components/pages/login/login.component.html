@@ -1,1 +1,34 @@
 <p>login works!</p>
+
+<form #f="ngForm" (ngSubmit)="submit()">
+  <label for="username">Username</label>
+  <input
+    class="form-control"
+    type="text"
+    id="username"
+    [(ngModel)]="login.username"
+    name="username"
+    required="required"
+  />
+  <label for="password">Password</label>
+  <input
+    class="form-control"
+    type="password"
+    id="password"
+    [(ngModel)]="login.password"
+    name="password"
+    required="required"
+  />
+  <button
+    class="btn btn-success"
+    type="submit"
+    (click)="submit()"
+    [disabled]="f.invalid"
+  >
+    Submit
+  </button>
+</form>
+
+username: {{ login.username }}
+<br />
+password: {{ login.password }}

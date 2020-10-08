@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +32,7 @@ import { LoginComponent } from './components/pages/login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LoginResult } from './domain/LoginResult';
 import { AppConstants } from './app.constants';
+import { TokenInterceptorService } from './auth/token-interceptor.service';
 
 export function tokenGetter() {
   const loginStored: LoginResult = JSON.parse(
@@ -60,7 +65,10 @@ export function tokenGetter() {
     FontAwesomeModule,
     HttpClientModule,
     InfiniteScrollModule,
+    // reactive forms
     ReactiveFormsModule,
+    // template forms
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -77,7 +85,13 @@ export function tokenGetter() {
       },
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

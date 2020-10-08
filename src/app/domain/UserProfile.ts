@@ -1,8 +1,7 @@
 export interface UserProfile {
   // TODO: this data is ok ?
-  id: string;
   username: string;
+  password: string;
   name: string;
   surname: string;
-  email: string;
 }

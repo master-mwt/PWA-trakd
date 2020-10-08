@@ -28,6 +28,17 @@ export class AuthService {
     localStorage.setItem(AppConstants.LOGIN_STORAGE, null);
   }
 
+  public getToken(): string {
+    const login: LoginResult = JSON.parse(
+      localStorage.getItem(AppConstants.LOGIN_STORAGE)
+    );
+    if (!login) {
+      return null;
+    } else {
+      return login.token;
+    }
+  }
+
   public isAuthenticated(): boolean {
     const login: LoginResult = JSON.parse(
       localStorage.getItem(AppConstants.LOGIN_STORAGE)
