@@ -12,8 +12,15 @@ import {
   faTh as faSTh,
   faThList as faSThList,
   faFlag as faSFlag,
+  faUser as faSUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { RefreshUserAction } from 'src/app/actions/user.actions';
+import { AuthService } from 'src/app/auth/auth.service';
+import { UserProfile } from 'src/app/domain/UserProfile';
+import { selectUser } from 'src/app/selectors/user.selector';
+import { IAppState } from 'src/app/state/app.state';
 
 @Component({
   selector: 'app-navbar',
@@ -34,13 +41,29 @@ export class NavbarComponent implements OnInit {
   faSTh = faSTh;
   faSThList = faSThList;
   faSFlag = faSFlag;
+  faSUser = faSUser;
 
-  constructor(public translate: TranslateService) {
+  user: UserProfile;
+
+  constructor(
+    public translate: TranslateService,
+    private store: Store<IAppState>,
+    private auth: AuthService
+  ) {
     translate.addLangs(['en', 'it']);
     translate.use(translate.getBrowserLang() === 'it' ? 'it' : 'en');
+    // listen user selector
+    store.pipe(select(selectUser)).subscribe((userProfile) => {
+      this.user = userProfile;
+    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // if token is valid then require user profile
+    if (this.auth.isAuthenticated()) {
+      this.store.dispatch(new RefreshUserAction());
+    }
+  }
 
   switchLang(lang: string) {
     this.translate.use(lang);

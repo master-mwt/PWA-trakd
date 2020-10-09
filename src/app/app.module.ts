@@ -33,6 +33,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { LoginResult } from './domain/LoginResult';
 import { AppConstants } from './app.constants';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
+import { UserEffects } from './effects/user-effects.service';
 
 export function tokenGetter() {
   const loginStored: LoginResult = JSON.parse(
@@ -77,7 +78,7 @@ export function tokenGetter() {
       },
     }),
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([CollectionEffects]),
+    EffectsModule.forRoot([CollectionEffects, UserEffects]),
     // is this right ?
     JwtModule.forRoot({
       config: {

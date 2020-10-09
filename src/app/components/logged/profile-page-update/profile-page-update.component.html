@@ -1,0 +1,22 @@
+<p>profile-page-update works!</p>
+<p>this is the profile username {{ user.username }}</p>
+<form [formGroup]="profileForm" (ngSubmit)="update()">
+  <label>
+    name:
+    <input type="text" formControlName="name" />
+  </label>
+
+  <label>
+    surname:
+    <input type="text" formControlName="surname" />
+  </label>
+
+  <label>
+    password:
+    <input type="password" formControlName="password" />
+  </label>
+
+  <button type="submit" class="btn btn-success" [disabled]="!profileForm.valid">
+    Update
+  </button>
+</form>
