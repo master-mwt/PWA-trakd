@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    // Is this right here ?
     console.log(JSON.stringify(this.login));
     this.authService.authenticate(this.login).subscribe(
       (loginResult) => {

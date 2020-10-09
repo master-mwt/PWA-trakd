@@ -11,6 +11,7 @@ import { GenresComponent } from './components/pages/genres/genres.component';
 import { InfoComponent } from './components/pages/info/info.component';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { LoginComponent } from './components/pages/login/login.component';
+import { RegistrationComponent } from './components/pages/registration/registration.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'explore/popular', pathMatch: 'full' },
@@ -32,6 +33,7 @@ const routes: Routes = [
   /*{ path: 'backup', component: BackupComponent },*/
   { path: 'info', component: InfoComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: RegistrationComponent },
   // protected routes
   {
     path: 'logged',

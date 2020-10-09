@@ -1,0 +1,57 @@
+<p>registration works!</p>
+
+<form #f="ngForm" (ngSubmit)="submit()">
+  <label for="username">Username</label>
+  <input
+    class="form-control"
+    type="text"
+    id="username"
+    [(ngModel)]="user.username"
+    name="username"
+    required="required"
+  />
+  <label for="password">Password</label>
+  <input
+    class="form-control"
+    type="password"
+    id="password"
+    [(ngModel)]="user.password"
+    name="password"
+    required="required"
+    minlength="6"
+  />
+  <label for="name">Name</label>
+  <input
+    class="form-control"
+    type="text"
+    id="name"
+    [(ngModel)]="user.name"
+    name="name"
+    required="required"
+  />
+  <label for="surname">Surname</label>
+  <input
+    class="form-control"
+    type="text"
+    id="text"
+    [(ngModel)]="user.surname"
+    name="surname"
+    required="required"
+  />
+  <button
+    class="btn btn-success"
+    type="submit"
+    (click)="submit()"
+    [disabled]="f.invalid"
+  >
+    Submit
+  </button>
+</form>
+
+username: {{ user.username }}
+<br />
+password: {{ user.password }}
+<br />
+name: {{ user.name }}
+<br />
+surname: {{ user.surname }}

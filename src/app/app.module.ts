@@ -34,6 +34,7 @@ import { LoginResult } from './domain/LoginResult';
 import { AppConstants } from './app.constants';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { UserEffects } from './effects/user-effects.service';
+import { RegistrationComponent } from './components/pages/registration/registration.component';
 
 export function tokenGetter() {
   const loginStored: LoginResult = JSON.parse(
@@ -59,6 +60,7 @@ export function tokenGetter() {
     GenresComponent,
     InfoComponent,
     LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,6 @@ export function tokenGetter() {
     }),
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([CollectionEffects, UserEffects]),
-    // is this right ?
     JwtModule.forRoot({
       config: {
         tokenGetter,

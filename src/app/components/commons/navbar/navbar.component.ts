@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   faBars as faSBars,
   faCompass as faSCompass,
@@ -14,6 +15,7 @@ import {
   faFlag as faSFlag,
   faUser as faSUser,
   faSignOutAlt as faSSignOutAlt,
+  faUserPlus as faSUserPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -45,13 +47,15 @@ export class NavbarComponent implements OnInit {
   faSFlag = faSFlag;
   faSUser = faSUser;
   faSSignOutAlt = faSSignOutAlt;
+  faSUserPlus = faSUserPlus;
 
   user: UserProfile;
 
   constructor(
     public translate: TranslateService,
     private store: Store<IAppState>,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     translate.addLangs(['en', 'it']);
     translate.use(translate.getBrowserLang() === 'it' ? 'it' : 'en');
@@ -72,6 +76,7 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     if (this.auth.isAuthenticated()) {
       this.auth.logout();
+      this.router.navigate(['']);
     }
   }
 

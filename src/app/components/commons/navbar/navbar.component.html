@@ -93,6 +93,12 @@
             {{ "navbar_profile" | translate }}
           </a>
         </li>
+        <li *ngIf="!user" class="nav-item">
+          <a [routerLink]="['signup']" class="nav-link">
+            <fa-icon [icon]="faSUserPlus" class="mr-1"></fa-icon>
+            {{ "navbar_signup" | translate }}
+          </a>
+        </li>
         <li *ngIf="!!user" class="nav-item">
           <a href="javascript:void(0)" (click)="logout()" class="nav-link">
             <fa-icon [icon]="faSSignOutAlt" class="mr-1"></fa-icon>
