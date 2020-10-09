@@ -18,6 +18,8 @@ import {
   AddToCollectionAction,
   RemoveFromCollectionAction,
 } from 'src/app/actions/collection.actions';
+import { UserProfile } from 'src/app/domain/UserProfile';
+import { selectUser } from 'src/app/selectors/user.selector';
 
 @Component({
   selector: 'app-search',
@@ -42,6 +44,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   private langChangeSubscription: any;
   private collectionSubscription: any;
+  private userSubscription: any;
+
+  userProfile: UserProfile;
 
   constructor(
     private tmdbService: TmdbService,
@@ -63,6 +68,11 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.tvShowDict = {};
         }
       });
+    this.userSubscription = this.store
+      .pipe(select(selectUser))
+      .subscribe((user) => {
+        this.userProfile = user;
+      });
   }
 
   private setTitle() {
@@ -78,6 +88,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
     this.collectionSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   search(): void {

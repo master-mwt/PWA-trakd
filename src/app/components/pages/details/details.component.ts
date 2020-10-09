@@ -27,6 +27,8 @@ import {
   MarkAllTvShowEpisodesAsSeenAction,
   RemoveFromCollectionAction,
 } from 'src/app/actions/collection.actions';
+import { selectUser } from 'src/app/selectors/user.selector';
+import { UserProfile } from 'src/app/domain/UserProfile';
 
 @Component({
   selector: 'app-details',
@@ -38,10 +40,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
   Cast: Character[] = [];
   tvShowPreviews: TvShowPreview[] = [];
   tvShowDict: Collection = null;
+  userProfile: UserProfile = null;
   allEpisodesMarked: boolean = false;
 
   private langChangeSubscription: any;
   private collectionSelectorSubscription: any;
+  private userSelectorSubscription: any;
 
   constructor(
     private router: Router,
@@ -59,6 +63,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
         if (this.tvShowDict === null) {
           this.tvShowDict = {};
         }
+      });
+    this.userSelectorSubscription = this.store
+      .pipe(select(selectUser))
+      .subscribe((user) => {
+        this.userProfile = user;
       });
   }
 
@@ -101,6 +110,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
     this.collectionSelectorSubscription.unsubscribe();
+    this.userSelectorSubscription.unsubscribe();
   }
 
   private downloadData(tv_show_id) {

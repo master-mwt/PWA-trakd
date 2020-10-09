@@ -54,18 +54,24 @@
           <div class="card-body p-2 border-0">
             <h6 class="card-title text-truncate mb-2">{{ t.name }}</h6>
             <button
-              *ngIf="!tvShowDict[t.id]"
+              *ngIf="!tvShowDict[t.id] && !!userProfile"
               class="btn btn-success btn-sm btn-block"
               (click)="addToCollection(t.id)"
             >
               <fa-icon [icon]="faSPlusCircle"></fa-icon>
             </button>
             <button
-              *ngIf="tvShowDict[t.id]"
+              *ngIf="tvShowDict[t.id] && !!userProfile"
               class="btn btn-danger btn-sm btn-block"
               (click)="removeFromCollection(t.id)"
             >
               <fa-icon [icon]="faSMinusCircle"></fa-icon>
+            </button>
+            <button
+              *ngIf="!userProfile"
+              class="btn btn-success btn-sm btn-block disabled"
+            >
+              <fa-icon [icon]="faSPlusCircle"></fa-icon>
             </button>
           </div>
         </div>

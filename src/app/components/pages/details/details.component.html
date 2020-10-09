@@ -48,7 +48,7 @@
         (bugged)
       </a>
       <a
-        *ngIf="!tvShowDict[TvShowDetails.id]"
+        *ngIf="!tvShowDict[TvShowDetails.id] && !!userProfile"
         href="javascript:void(0)"
         class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-success mb-3"
         role="button"
@@ -58,7 +58,16 @@
         {{ "add_to_collection" | translate }}
       </a>
       <a
-        *ngIf="tvShowDict[TvShowDetails.id]"
+        *ngIf="!userProfile"
+        href="javascript:void(0)"
+        class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-success mb-3 disabled"
+        role="button"
+      >
+        <fa-icon class="mr-1" [icon]="faPlusCircle"></fa-icon>
+        {{ "add_to_collection" | translate }}
+      </a>
+      <a
+        *ngIf="tvShowDict[TvShowDetails.id] && !!userProfile"
         href="javascript:void(0)"
         class="float-right btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-danger mb-3"
         role="button"
