@@ -23,12 +23,6 @@
     </div>
   </div>
   <div class="row mb-4 justify-content-center">
-    <input
-      id="file-upload"
-      accept="application/json"
-      type="file"
-      (change)="fileChanged($event)"
-    />
     <button type="button" class="btn btn-dark" (click)="restore()">
       <fa-icon class="mr-2" [icon]="faSFileUpload"></fa-icon>
       {{ "import_backup" | translate }}

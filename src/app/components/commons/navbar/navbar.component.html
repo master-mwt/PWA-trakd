@@ -94,6 +94,12 @@
           </a>
         </li>
         <li *ngIf="!!user" class="nav-item">
+          <a href="javascript:void(0)" (click)="logout()" class="nav-link">
+            <fa-icon [icon]="faSSignOutAlt" class="mr-1"></fa-icon>
+            {{ "navbar_logout" | translate }}
+          </a>
+        </li>
+        <li *ngIf="!!user" class="nav-item">
           <a [routerLink]="['logged/backup']" class="nav-link">
             <fa-icon [icon]="faSSave" class="mr-1"></fa-icon>
             {{ "navbar_backup" | translate }}

@@ -1,15 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import * as FileSaver from 'file-saver';
-import * as $ from 'jquery';
-import * as _ from 'lodash';
 import {
   faFileUpload as faSFileUpload,
   faFileDownload as faSFileDownload,
   faServer as faSServer,
 } from '@fortawesome/free-solid-svg-icons';
-import { Collection } from 'src/app/domain/Collection';
 import { Title } from '@angular/platform-browser';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { select, Store } from '@ngrx/store';
+import { IAppState } from 'src/app/state/app.state';
+import {
+  RefreshCollectionAction,
+  SaveCollectionAction,
+} from 'src/app/actions/collection.actions';
+import { Collection } from 'src/app/domain/Collection';
+import { selectCollection } from 'src/app/selectors/collection.selector';
 
 @Component({
   selector: 'app-backup',
@@ -20,15 +24,30 @@ export class BackupComponent implements OnInit, OnDestroy {
   log_status: string = 'waiting';
   log_message: string = 'idle';
 
-  private langChangeSubscription: any;
+  collection: Collection;
 
-  constructor(private title: Title, private translate: TranslateService) {
+  private langChangeSubscription: any;
+  private collectionSelectorSub: any;
+
+  constructor(
+    private title: Title,
+    private translate: TranslateService,
+    private store: Store<IAppState>
+  ) {
     this.setTitle();
     this.langChangeSubscription = this.translate.onLangChange.subscribe(
       (event: LangChangeEvent) => {
         this.setTitle();
       }
     );
+    this.collectionSelectorSub = this.store
+      .pipe(select(selectCollection))
+      .subscribe((collection) => {
+        this.collection = collection;
+        if (this.collection === null) {
+          this.collection = {};
+        }
+      });
   }
 
   private setTitle() {
@@ -45,10 +64,11 @@ export class BackupComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
+    this.collectionSelectorSub.unsubscribe();
   }
 
   backup(): void {
-    let blob: Blob = new Blob([localStorage.getItem('collection')], {
+    /*let blob: Blob = new Blob([localStorage.getItem('collection')], {
       type: 'application/json',
     });
     let day = new Date().getDate().toString();
@@ -69,14 +89,16 @@ export class BackupComponent implements OnInit, OnDestroy {
       minutes +
       '-' +
       seconds;
-    FileSaver.saveAs(blob, 'collection_' + date + '.json');
+    FileSaver.saveAs(blob, 'collection_' + date + '.json');*/
+    this.store.dispatch(new SaveCollectionAction(this.collection));
   }
 
   restore(): void {
-    $('#file-upload').trigger('click');
+    //$('#file-upload').trigger('click');
+    this.store.dispatch(new RefreshCollectionAction());
   }
 
-  fileChanged(e: Event): void {
+  /*fileChanged(e: Event): void {
     if (
       (e.target as HTMLInputElement).files &&
       (e.target as HTMLInputElement).files.length
@@ -119,9 +141,9 @@ export class BackupComponent implements OnInit, OnDestroy {
       };
       fileReader.readAsText(restoreFile);
     }
-  }
+  }*/
 
-  parseCollection(collection: Collection): boolean {
+  /*parseCollection(collection: Collection): boolean {
     for (let key of Object.keys(collection)) {
       if (!Number(key)) {
         return false;
@@ -141,7 +163,7 @@ export class BackupComponent implements OnInit, OnDestroy {
       }
     }
     return true;
-  }
+  }*/
 
   // icons
   faSFileUpload = faSFileUpload;

@@ -15,21 +15,18 @@ const PROFILE_URL = `${AppConstants.SERVER_URL}/profile`;
 export class LocalserverService {
   constructor(private httpClient: HttpClient) {}
 
-  // TODO: must have username ?
   getUserCollection(): Observable<Collection> {
     return this.httpClient
       .get<Collection>(COLLECTION_URL)
       .pipe(catchError(this.handleError));
   }
 
-  // TODO: must have username ?
   saveCollection(collection: Collection): Observable<Collection> {
     return this.httpClient
       .post<Collection>(COLLECTION_URL, collection)
       .pipe(catchError(this.handleError));
   }
 
-  // TODO: must have username ?
   getUserProfileData(): Observable<UserProfile> {
     return this.httpClient
       .get<UserProfile>(PROFILE_URL)

@@ -9,6 +9,7 @@
   "navbar_backup": "backup",
   "navbar_info": "info",
   "navbar_profile": "profile",
+  "navbar_logout": "logout",
   "back": "back",
   "mark_all_as_seen": "mark all as seen",
   "mark_all_as_unseen": "mark all as unseen",

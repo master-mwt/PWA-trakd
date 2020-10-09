@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { RefreshCollectionAction } from 'src/app/actions/collection.actions';
 import { RefreshUserAction } from 'src/app/actions/user.actions';
 import { UserProfile } from 'src/app/domain/UserProfile';
 import { selectUser } from 'src/app/selectors/user.selector';
@@ -29,6 +30,7 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.store.dispatch(new RefreshUserAction());
+    this.store.dispatch(new RefreshCollectionAction());
   }
 
   wantUpdate(): void {

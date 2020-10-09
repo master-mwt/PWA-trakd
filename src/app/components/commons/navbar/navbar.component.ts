@@ -13,9 +13,11 @@ import {
   faThList as faSThList,
   faFlag as faSFlag,
   faUser as faSUser,
+  faSignOutAlt as faSSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { RefreshCollectionAction } from 'src/app/actions/collection.actions';
 import { RefreshUserAction } from 'src/app/actions/user.actions';
 import { AuthService } from 'src/app/auth/auth.service';
 import { UserProfile } from 'src/app/domain/UserProfile';
@@ -42,6 +44,7 @@ export class NavbarComponent implements OnInit {
   faSThList = faSThList;
   faSFlag = faSFlag;
   faSUser = faSUser;
+  faSSignOutAlt = faSSignOutAlt;
 
   user: UserProfile;
 
@@ -62,6 +65,13 @@ export class NavbarComponent implements OnInit {
     // if token is valid then require user profile
     if (this.auth.isAuthenticated()) {
       this.store.dispatch(new RefreshUserAction());
+      this.store.dispatch(new RefreshCollectionAction());
+    }
+  }
+
+  logout(): void {
+    if (this.auth.isAuthenticated()) {
+      this.auth.logout();
     }
   }
 
