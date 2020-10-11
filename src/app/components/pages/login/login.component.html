@@ -19,12 +19,7 @@
     name="password"
     required="required"
   />
-  <button
-    class="btn btn-success"
-    type="submit"
-    (click)="submit()"
-    [disabled]="f.invalid"
-  >
+  <button class="btn btn-success" type="submit" [disabled]="f.invalid">
     Submit
   </button>
 </form>
