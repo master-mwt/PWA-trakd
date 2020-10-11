@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   faBars as faSBars,
   faCompass as faSCompass,
@@ -54,8 +53,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     public translate: TranslateService,
     private store: Store<IAppState>,
-    private auth: AuthService,
-    private router: Router
+    private auth: AuthService
   ) {
     translate.addLangs(['en', 'it']);
     translate.use(translate.getBrowserLang() === 'it' ? 'it' : 'en');
@@ -70,13 +68,6 @@ export class NavbarComponent implements OnInit {
     if (this.auth.isAuthenticated()) {
       this.store.dispatch(new RefreshUserAction());
       this.store.dispatch(new RefreshCollectionAction());
-    }
-  }
-
-  logout(): void {
-    if (this.auth.isAuthenticated()) {
-      this.auth.logout();
-      this.router.navigate(['explore/popular']);
     }
   }
 

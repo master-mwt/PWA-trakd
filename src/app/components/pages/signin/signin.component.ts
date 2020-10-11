@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import { LoginData } from 'src/app/domain/LoginData';
 import { FormsModule } from '@angular/forms';
 import { AppConstants } from 'src/app/app.constants';
+import { UserProfile } from 'src/app/domain/UserProfile';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-signin',
+  templateUrl: './signin.component.html',
+  styleUrls: ['./signin.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class SignInComponent implements OnInit {
   login: LoginData;
+  user: UserProfile;
 
-  constructor(private authService: AuthService, public router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.login = { username: '', password: '' };
   }
 
   submit() {
+    if (this.authService.isAuthenticated()) {
+      this.authService.logout();
+    }
     console.log(JSON.stringify(this.login));
     this.authService.authenticate(this.login).subscribe(
       (loginResult) => {
@@ -28,7 +33,7 @@ export class LoginComponent implements OnInit {
           JSON.stringify(loginResult)
         );
         console.log(loginResult);
-        this.router.navigate(['logged']);
+        this.router.navigate(['account']);
       },
       (error) => {
         console.log('error');

@@ -3,16 +3,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserProfile } from 'src/app/domain/UserProfile';
 
 @Component({
-  selector: 'app-profile-page-update',
-  templateUrl: './profile-page-update.component.html',
-  styleUrls: ['./profile-page-update.component.css'],
+  selector: 'app-profile-update',
+  templateUrl: './profile-update.component.html',
+  styleUrls: ['./profile-update.component.css'],
 })
-export class ProfilePageUpdateComponent implements OnInit {
+export class ProfileUpdateComponent implements OnInit {
   @Input()
   user: UserProfile;
 
   @Output()
-  updateCompleteEmitEv: EventEmitter<string>;
+  updateCompleteEmitEv: EventEmitter<UserProfile>;
 
   profileForm: FormGroup;
 
@@ -22,13 +22,16 @@ export class ProfilePageUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = new FormGroup({
-      password: new FormControl('', [Validators.required]),
       name: new FormControl(this.user.name, [Validators.required]),
       surname: new FormControl(this.user.surname, [Validators.required]),
     });
   }
 
   update(): void {
-    this.updateCompleteEmitEv.emit('success');
+    this.updateCompleteEmitEv.emit({
+      name: this.profileForm.value['name'],
+      surname: this.profileForm.value['surname'],
+      username: this.user.username,
+    });
   }
 }

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
-import { UserProfile } from 'src/app/domain/UserProfile';
 import { FormsModule } from '@angular/forms';
+import { UserSignUp } from 'src/app/domain/UserSignUp';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css'],
 })
-export class RegistrationComponent implements OnInit {
-  user: UserProfile;
+export class SignUpComponent implements OnInit {
+  user: UserSignUp;
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
       (user) => {
         console.log('registration complete');
         console.log(user);
-        this.router.navigate(['login']);
+        this.router.navigate(['signin']);
       },
       (error) => {
         console.log('error');

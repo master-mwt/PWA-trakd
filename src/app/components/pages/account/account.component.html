@@ -1,0 +1,29 @@
+<p>account works!</p>
+
+<button *ngIf="!!user" class="btn btn-sm btn-primary" (click)="logout()">
+  Logout
+</button>
+<a
+  *ngIf="!user"
+  [routerLink]="['/signin']"
+  class="btn btn-sm btn-primary"
+  role="button"
+  >Sign in</a
+>
+<a
+  *ngIf="!!user"
+  [routerLink]="['/signin']"
+  class="btn btn-sm btn-primary disabled"
+  role="button"
+  >Sign in</a
+>
+<a [routerLink]="['/signup']" class="btn btn-sm btn-primary" role="button"
+  >Sign up</a
+>
+<a
+  *ngIf="!!user"
+  [routerLink]="['/private/profile']"
+  class="btn btn-sm btn-primary"
+  role="button"
+  >Profile</a
+>

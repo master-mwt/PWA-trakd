@@ -10,6 +10,7 @@ import { AppConstants } from '../app.constants';
 import { LoginData } from '../domain/LoginData';
 import { LoginResult } from '../domain/LoginResult';
 import { UserProfile } from '../domain/UserProfile';
+import { UserSignUp } from '../domain/UserSignUp';
 import { IAppState } from '../state/app.state';
 
 const AUTH_SIGN_IN_URL = `${AppConstants.SERVER_URL}/auth/sign_in`;
@@ -31,14 +32,13 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   }
 
-  public signUp(userProfile: UserProfile): Observable<UserProfile> {
+  public signUp(userSignUp: UserSignUp): Observable<UserProfile> {
     return this.httpClient
-      .post<UserProfile>(AUTH_SIGN_UP_URL, userProfile)
+      .post<UserProfile>(AUTH_SIGN_UP_URL, userSignUp)
       .pipe(catchError(this.handleError));
   }
 
   public logout(): void {
-    // TODO: Is it good to put here state ?
     localStorage.setItem(AppConstants.LOGIN_STORAGE, null);
     this.store.dispatch(new RefreshUserSuccessAction(null));
     this.store.dispatch(new RefreshCollectionSuccessAction(null));

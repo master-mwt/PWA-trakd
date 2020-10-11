@@ -10,8 +10,9 @@ import { SeasonComponent } from './components/pages/season/season.component';
 import { GenresComponent } from './components/pages/genres/genres.component';
 import { InfoComponent } from './components/pages/info/info.component';
 import { AuthGuardService } from './auth/auth-guard.service';
-import { LoginComponent } from './components/pages/login/login.component';
-import { RegistrationComponent } from './components/pages/registration/registration.component';
+import { SignInComponent } from './components/pages/signin/signin.component';
+import { SignUpComponent } from './components/pages/signup/signup.component';
+import { AccountComponent } from './components/pages/account/account.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'explore/popular', pathMatch: 'full' },
@@ -29,17 +30,16 @@ const routes: Routes = [
   },
   { path: 'search', component: SearchComponent },
   { path: 'genres', component: GenresComponent },
-  /*{ path: 'collection', component: CollectionComponent },*/
-  /*{ path: 'backup', component: BackupComponent },*/
   { path: 'info', component: InfoComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: RegistrationComponent },
+  { path: 'signin', component: SignInComponent },
+  { path: 'signup', component: SignUpComponent },
+  { path: 'account', component: AccountComponent },
   // protected routes
   {
-    path: 'logged',
+    path: 'private',
     loadChildren: () =>
-      import('./components/logged/logged.module').then(
-        (mod) => mod.LoggedModule
+      import('./components/private/private.module').then(
+        (mod) => mod.PrivateModule
       ),
     canActivate: [AuthGuardService],
   },

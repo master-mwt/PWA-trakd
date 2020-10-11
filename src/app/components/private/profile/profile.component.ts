@@ -1,17 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { RefreshCollectionAction } from 'src/app/actions/collection.actions';
-import { RefreshUserAction } from 'src/app/actions/user.actions';
+import { UpdateUserAction } from 'src/app/actions/user.actions';
 import { UserProfile } from 'src/app/domain/UserProfile';
 import { selectUser } from 'src/app/selectors/user.selector';
 import { IAppState } from 'src/app/state/app.state';
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css'],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css'],
 })
-export class ProfilePageComponent implements OnInit, OnDestroy {
+export class ProfileComponent implements OnInit, OnDestroy {
   user: UserProfile;
   userSelectorSub: any;
   wantUpdateProfile: boolean = false;
@@ -28,18 +27,16 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
     this.userSelectorSub.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.store.dispatch(new RefreshUserAction());
-    this.store.dispatch(new RefreshCollectionAction());
-  }
+  ngOnInit(): void {}
 
   wantUpdate(): void {
     this.wantUpdateProfile = !this.wantUpdateProfile;
   }
 
-  handleUpdateComplete(event: string): void {
-    if (event === 'success') {
-      this.wantUpdateProfile = false;
-    }
+  handleUpdateComplete(event: UserProfile): void {
+    console.log('update event');
+    console.log(event);
+    this.store.dispatch(new UpdateUserAction(event));
+    this.wantUpdateProfile = false;
   }
 }

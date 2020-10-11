@@ -17,9 +17,7 @@ import { NotfoundComponent } from './components/pages/notfound/notfound.componen
 import { DetailsComponent } from './components/pages/details/details.component';
 import { SearchComponent } from './components/pages/search/search.component';
 import { SeasonComponent } from './components/pages/season/season.component';
-import { CollectionComponent } from './components/pages/collection/collection.component';
 import { EpisodeComponent } from './components/pages/episode/episode.component';
-import { BackupComponent } from './components/pages/backup/backup.component';
 import { GenresComponent } from './components/pages/genres/genres.component';
 import { InfoComponent } from './components/pages/info/info.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -28,13 +26,14 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { appReducers } from './reducers/app.reducer';
 import { CollectionEffects } from './effects/collection-effects.service';
-import { LoginComponent } from './components/pages/login/login.component';
+import { SignInComponent } from './components/pages/signin/signin.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LoginResult } from './domain/LoginResult';
 import { AppConstants } from './app.constants';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { UserEffects } from './effects/user-effects.service';
-import { RegistrationComponent } from './components/pages/registration/registration.component';
+import { SignUpComponent } from './components/pages/signup/signup.component';
+import { AccountComponent } from './components/pages/account/account.component';
 
 export function tokenGetter() {
   const loginStored: LoginResult = JSON.parse(
@@ -54,13 +53,12 @@ export function tokenGetter() {
     DetailsComponent,
     SearchComponent,
     SeasonComponent,
-    CollectionComponent,
     EpisodeComponent,
-    BackupComponent,
     GenresComponent,
     InfoComponent,
-    LoginComponent,
-    RegistrationComponent,
+    SignInComponent,
+    SignUpComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,9 +66,7 @@ export function tokenGetter() {
     FontAwesomeModule,
     HttpClientModule,
     InfiniteScrollModule,
-    // reactive forms
     ReactiveFormsModule,
-    // template forms
     FormsModule,
     TranslateModule.forRoot({
       loader: {
