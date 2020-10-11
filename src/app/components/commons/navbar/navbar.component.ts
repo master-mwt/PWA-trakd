@@ -76,7 +76,7 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     if (this.auth.isAuthenticated()) {
       this.auth.logout();
-      this.router.navigate(['']);
+      this.router.navigate(['explore/popular']);
     }
   }
 
