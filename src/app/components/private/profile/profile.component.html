@@ -1,13 +1,35 @@
-<p>profile-page works!</p>
-<br />
-<p *ngIf="user">username: {{ user.username }}</p>
-<p *ngIf="user">name: {{ user.name }}</p>
-<p *ngIf="user">surname: {{ user.surname }}</p>
-<br />
-<button (click)="wantUpdate()" class="btn btn-danger">Update profile</button>
-<br />
-<app-profile-update
-  *ngIf="wantUpdateProfile"
-  [user]="user"
-  (updateCompleteEmitEv)="handleUpdateComplete($event)"
-></app-profile-update>
+<div class="container py-4">
+  <div class="row">
+    <div class="col mx-1">
+      <div class="mx-auto" style="max-width: 500px">
+        <div class="text-center">
+          <img
+            src="assets/imgs/profile_img.jpg"
+            class="border border-dark rounded mx-auto mb-3"
+            alt="not_found_face"
+            width="100px"
+          />
+        </div>
+        <div class="text-center">
+          <p *ngIf="user">
+            <span class="text-muted mr-3">username</span>{{ user.username }}
+          </p>
+          <p *ngIf="user">
+            <span class="text-muted mr-3">name</span>{{ user.name }}
+          </p>
+          <p *ngIf="user">
+            <span class="text-muted mr-3">surname</span>{{ user.surname }}
+          </p>
+          <button (click)="wantUpdate()" class="btn btn-primary btn-block mt-2">
+            Update profile
+          </button>
+        </div>
+        <app-profile-update
+          *ngIf="wantUpdateProfile"
+          [user]="user"
+          (updateCompleteEmitEv)="handleUpdateComplete($event)"
+        ></app-profile-update>
+      </div>
+    </div>
+  </div>
+</div>

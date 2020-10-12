@@ -1,17 +1,25 @@
-<p>profile-page-update works!</p>
-<p>this is the profile username {{ user.username }}</p>
 <form [formGroup]="profileForm" (ngSubmit)="update()">
-  <label>
-    name:
-    <input type="text" formControlName="name" />
-  </label>
-
-  <label>
-    surname:
-    <input type="text" formControlName="surname" />
-  </label>
-
-  <button type="submit" class="btn btn-success" [disabled]="!profileForm.valid">
+  <div class="mt-3 d-flex flex-column">
+    <label for="name">Name</label>
+    <input
+      class="form-control mb-3"
+      type="text"
+      formControlName="name"
+      placeholder="Name"
+    />
+    <label for="surname">Surname</label>
+    <input
+      class="form-control mb-4"
+      type="text"
+      formControlName="surname"
+      placeholder="Surname"
+    />
+  </div>
+  <button
+    type="submit"
+    class="btn btn-success btn-block"
+    [disabled]="!profileForm.valid"
+  >
     Update
   </button>
 </form>
