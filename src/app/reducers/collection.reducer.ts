@@ -19,7 +19,7 @@ export function collectionReducer(
       };
     
     case ECollectionActions.REFRESH_COLLECTION_ERROR:
-      alert('Refresh collection error');
+      alert('Refresh collection error, please retry later');
       console.error(action.payload);
     
       return state;
@@ -31,7 +31,7 @@ export function collectionReducer(
       };
 
     case ECollectionActions.SAVE_COLLECTION_ERROR:
-      alert('Save collection error');
+      alert('Save collection error, please retry later');
       console.error(action.payload);
 
       return state;
@@ -57,7 +57,7 @@ export function collectionReducer(
       };
 
     case ECollectionActions.ADD_TO_COLLECTION_ERROR:
-      alert('Add to collection error');
+      alert('Add to collection error, please retry later');
       console.error(action.payload);
   
       return state;

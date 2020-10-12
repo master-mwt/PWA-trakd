@@ -14,7 +14,7 @@ export function userReducer(
       };
 
     case EUserActions.REFRESH_USER_ERROR:
-      alert('Refresh user error');
+      alert('Refresh user error, please retry later');
       console.error(action.payload);
     
       return state;
@@ -26,7 +26,7 @@ export function userReducer(
       };
 
     case EUserActions.UPDATE_USER_ERROR:
-      alert('Update user error');
+      alert('Update user error, please retry later');
       console.error(action.payload);
     
       return state;
