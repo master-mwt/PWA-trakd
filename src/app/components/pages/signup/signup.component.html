@@ -1,5 +1,9 @@
 <p>registration works!</p>
 
+<div *ngIf="error" class="alert alert-danger" role="alert">
+  Sign up error
+</div>
+
 <form #f="ngForm" (ngSubmit)="submit()">
   <label for="username">Username</label>
   <input

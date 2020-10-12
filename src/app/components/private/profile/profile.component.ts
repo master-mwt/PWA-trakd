@@ -34,8 +34,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   handleUpdateComplete(event: UserProfile): void {
-    console.log('update event');
-    console.log(event);
     this.store.dispatch(new UpdateUserAction(event));
     this.wantUpdateProfile = false;
   }

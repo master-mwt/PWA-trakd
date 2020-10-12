@@ -11,6 +11,7 @@ import { UserSignUp } from 'src/app/domain/UserSignUp';
 })
 export class SignUpComponent implements OnInit {
   user: UserSignUp;
+  error: boolean = false;
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -21,13 +22,13 @@ export class SignUpComponent implements OnInit {
   submit(): void {
     this.auth.signUp(this.user).subscribe(
       (user) => {
-        console.log('registration complete');
-        console.log(user);
+        if(this.error) {
+          this.error = false;
+        }
         this.router.navigate(['signin']);
       },
       (error) => {
-        console.log('error');
-        console.log(error);
+        this.error = true;
       }
     );
   }

@@ -232,26 +232,6 @@ export class GenresComponent implements OnInit, OnDestroy {
   }
 
   addToCollection(id: number): void {
-    /*if (this.tvShowDict) {
-      this.tvShowDict[id] = {
-        episodes: {},
-      };
-      this.tmdbService.getTvShowDetails(id).subscribe((res) => {
-        for (let season of res.seasons) {
-          this.tmdbService
-            .getTvShowSeason(id, season.season_number)
-            .subscribe((res) => {
-              for (let episode of res.episodes) {
-                this.tvShowDict[id].episodes[episode.id] = false;
-              }
-              localStorage.setItem(
-                'collection',
-                JSON.stringify(this.tvShowDict)
-              );
-            });
-        }
-      });
-    }*/
     this.tmdbService.getTvShowDetails(id).subscribe((res) => {
       this.store.dispatch(new AddToCollectionAction(res));
     });
@@ -259,8 +239,6 @@ export class GenresComponent implements OnInit, OnDestroy {
 
   removeFromCollection(id: number): void {
     if (!!this.tvShowDict && !!this.tvShowDict[id]) {
-      /*delete this.tvShowDict[id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
       this.store.dispatch(new RemoveFromCollectionAction({ id: id, name: '' }));
     }
   }

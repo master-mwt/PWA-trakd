@@ -16,7 +16,5 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)],
 })
 export class PrivateRoutingModule {
-  constructor() {
-    console.log('Logged routing module initialized');
-  }
+  constructor() {}
 }

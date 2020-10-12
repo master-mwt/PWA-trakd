@@ -1,51 +1,14 @@
 <div *ngIf="TvShowDetails" class="container py-4">
-  <div class="row mb-3">
-    <div class="col mx-1">
+  <div class="row">
+    <div *ngIf="!!tvShowDict && !!TvShowDetails" class="col mx-1">
       <a
         href="javascript:void(0)"
-        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-secondary"
+        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-secondary mb-3"
         role="button"
         (click)="goBack()"
       >
         <fa-icon class="mr-1" [icon]="faSArrowCircleLeft"></fa-icon>
         {{ "back" | translate }}
-      </a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div *ngIf="!!tvShowDict && !!TvShowDetails" class="col mx-1">
-      <a
-        *ngIf="!!tvShowDict[TvShowDetails.id] && !allEpisodesMarked"
-        href="javascript:void(0)"
-        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3"
-        role="button"
-        (click)="markAllEpisodes(true)"
-      >
-        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
-        {{ "mark_all_as_seen" | translate }}
-        (bugged)
-      </a>
-      <a
-        *ngIf="!tvShowDict[TvShowDetails.id]"
-        href="javascript:void(0)"
-        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-primary mb-3 disabled"
-        role="button"
-      >
-        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
-        {{ "mark_all_as_seen" | translate }}
-        (bugged)
-      </a>
-      <a
-        *ngIf="!!tvShowDict[TvShowDetails.id] && allEpisodesMarked"
-        href="javascript:void(0)"
-        class="float-left mr-2 btn btn-sm col-xl-3 col-lg-3 col-md-4 col-sm-5 btn-danger mb-3"
-        role="button"
-        (click)="markAllEpisodes(false)"
-      >
-        <fa-icon class="mr-1" [icon]="faSCheckCircle"></fa-icon>
-        {{ "mark_all_as_unseen" | translate }}
-        (bugged)
       </a>
       <a
         *ngIf="!tvShowDict[TvShowDetails.id] && !!userProfile"

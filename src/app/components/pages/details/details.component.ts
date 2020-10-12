@@ -23,8 +23,6 @@ import { IAppState } from 'src/app/state/app.state';
 import { selectCollection } from 'src/app/selectors/collection.selector';
 import {
   AddToCollectionAction,
-  MarkAllTvShowEpisodesAsNotSeenAction,
-  MarkAllTvShowEpisodesAsSeenAction,
   RemoveFromCollectionAction,
 } from 'src/app/actions/collection.actions';
 import { selectUser } from 'src/app/selectors/user.selector';
@@ -274,59 +272,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   addToCollection(): void {
-    /*if (this.tvShowDict) {
-      this.tvShowDict[this.TvShowDetails.id] = {
-        episodes: {},
-      };
-      for (let season of this.TvShowDetails.seasons) {
-        this.TmdbService.getTvShowSeason(
-          this.TvShowDetails.id,
-          season.season_number
-        ).subscribe((res) => {
-          for (let episode of res.episodes) {
-            this.tvShowDict[this.TvShowDetails.id].episodes[episode.id] = false;
-          }
-          localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
-        });
-      }
-      this.checkAllMarked();
-    }*/
     this.store.dispatch(new AddToCollectionAction(this.TvShowDetails));
     this.checkAllMarked();
   }
 
   removeFromCollection(): void {
     if (!!this.tvShowDict && this.tvShowDict[this.TvShowDetails.id]) {
-      /*delete this.tvShowDict[this.TvShowDetails.id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
       this.store.dispatch(new RemoveFromCollectionAction(this.TvShowDetails));
-    }
-  }
-
-  markAllEpisodes(value: boolean): void {
-    if (
-      !!this.tvShowDict &&
-      this.tvShowDict[this.TvShowDetails.id] &&
-      !!this.tvShowDict[this.TvShowDetails.id].episodes
-    ) {
-      /*for (let episodeKey of Object.keys(
-        this.tvShowDict[this.TvShowDetails.id].episodes
-      )) {
-        this.tvShowDict[this.TvShowDetails.id].episodes[episodeKey] = value;
-      }
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
-      if (value) {
-        // mark
-        this.store.dispatch(
-          new MarkAllTvShowEpisodesAsSeenAction(this.TvShowDetails)
-        );
-      } else {
-        // unmark
-        this.store.dispatch(
-          new MarkAllTvShowEpisodesAsNotSeenAction(this.TvShowDetails)
-        );
-      }
-      this.checkAllMarked();
     }
   }
 

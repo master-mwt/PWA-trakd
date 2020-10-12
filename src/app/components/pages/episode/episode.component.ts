@@ -124,30 +124,12 @@ export class EpisodeComponent implements OnInit, OnDestroy {
 
   markAsSeen(): void {
     if (this.tvShowDict[this.Episode.tv_show_id]) {
-      /*if (!this.tvShowDict[this.Episode.tv_show_id].episodes) {
-        this.tvShowDict[this.Episode.tv_show_id].episodes = {};
-      }*/
-      /*if (!this.tvShowDict[this.Episode.tv_show_id].episodes[this.Episode.id]) {
-        this.tvShowDict[this.Episode.tv_show_id].episodes[
-          this.Episode.id
-        ] = true;
-        localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
-      }*/
       this.store.dispatch(new MarkEpisodeAsSeenAction(this.Episode));
     }
   }
 
   markAsNotSeen(): void {
     if (this.tvShowDict[this.Episode.tv_show_id]) {
-      /*if (
-        !!this.tvShowDict[this.Episode.tv_show_id].episodes &&
-        this.tvShowDict[this.Episode.tv_show_id].episodes[this.Episode.id]
-      ) {
-        this.tvShowDict[this.Episode.tv_show_id].episodes[
-          this.Episode.id
-        ] = false;
-        localStorage.setItem('collection', JSON.stringify(this.tvShowDict));
-      }*/
       this.store.dispatch(new MarkEpisodeAsNotSeenAction(this.Episode));
     }
   }

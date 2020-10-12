@@ -68,33 +68,10 @@ export class BackupComponent implements OnInit, OnDestroy {
   }
 
   backup(): void {
-    /*let blob: Blob = new Blob([localStorage.getItem('collection')], {
-      type: 'application/json',
-    });
-    let day = new Date().getDate().toString();
-    let month = (new Date().getMonth() + 1).toString();
-    let year = new Date().getFullYear().toString();
-    let hour = new Date().getHours().toString();
-    let minutes = new Date().getMinutes().toString();
-    let seconds = new Date().getSeconds().toString();
-    let date =
-      day +
-      '-' +
-      month +
-      '-' +
-      year +
-      '_' +
-      hour +
-      '-' +
-      minutes +
-      '-' +
-      seconds;
-    FileSaver.saveAs(blob, 'collection_' + date + '.json');*/
     this.store.dispatch(new SaveCollectionAction(this.collection));
   }
 
   restore(): void {
-    //$('#file-upload').trigger('click');
     this.store.dispatch(new RefreshCollectionAction());
   }
 

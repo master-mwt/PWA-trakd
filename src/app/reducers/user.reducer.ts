@@ -8,30 +8,26 @@ export function userReducer(
 ): IUserState {
   switch (action.type) {
     case EUserActions.REFRESH_USER_SUCCESS:
-      console.log(action.payload);
-
       return {
         ...state,
         user: action.payload,
       };
 
     case EUserActions.REFRESH_USER_ERROR:
-      console.log('error action');
-      console.log(action.payload);
+      alert('Refresh user error');
+      console.error(action.payload);
     
       return state;
 
     case EUserActions.UPDATE_USER_SUCCESS:
-      console.log(action.payload);
-
       return {
         ...state,
         user: action.payload,
       };
 
     case EUserActions.UPDATE_USER_ERROR:
-      console.log('error action');
-      console.log(action.payload);
+      alert('Update user error');
+      console.error(action.payload);
     
       return state;
 

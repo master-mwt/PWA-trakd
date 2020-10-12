@@ -29,7 +29,5 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
   ],
 })
 export class PrivateModule {
-  constructor() {
-    console.log('LoggedModule initiliazed');
-  }
+  constructor() {}
 }

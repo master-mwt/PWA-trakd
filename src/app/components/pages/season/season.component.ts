@@ -188,23 +188,11 @@ export class SeasonComponent implements OnInit, OnDestroy {
   }
 
   markEpisode(id: number): void {
-    /*if (
-      !!this.tvShowDict[this.Season.tv_show_id] &&
-      !this.tvShowDict[this.Season.tv_show_id].episodes &&
-      !!this.Season.episodes
-    ) {
-      this.tvShowDict[this.Season.tv_show_id].episodes = {};
-    }*/
     if (
       !!this.tvShowDict[this.Season.tv_show_id] &&
       !!this.tvShowDict[this.Season.tv_show_id].episodes &&
       !!this.Season.episodes
     ) {
-      /*this.tvShowDict[this.Season.tv_show_id].episodes[id] = !this.tvShowDict[
-        this.Season.tv_show_id
-      ].episodes[id];
-      this.checkAllMarked();
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
       if (this.tvShowDict[this.Season.tv_show_id].episodes[id] === false) {
         // mark as seen
         let episodeToBeMarked = this.Season.episodes.filter(
@@ -229,23 +217,11 @@ export class SeasonComponent implements OnInit, OnDestroy {
   }
 
   markAllEpisodes(value: boolean): void {
-    /*if (
-      !!this.tvShowDict[this.Season.tv_show_id] &&
-      !this.tvShowDict[this.Season.tv_show_id].episodes &&
-      !!this.Season.episodes
-    ) {
-      this.tvShowDict[this.Season.tv_show_id].episodes = {};
-    }*/
     if (
       !!this.tvShowDict[this.Season.tv_show_id] &&
       !!this.tvShowDict[this.Season.tv_show_id].episodes &&
       !!this.Season.episodes
     ) {
-      /*for (let episode of this.Season.episodes) {
-        this.tvShowDict[this.Season.tv_show_id].episodes[episode.id] = value;
-      }
-      this.checkAllMarked();
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
       if (value) {
         this.store.dispatch(new MarkAllSeasonEpisodesAsSeenAction(this.Season));
       } else {

@@ -11,33 +11,28 @@ export function collectionReducer(
   let collection: Collection = null;
   let seasons: Season[] = null;
 
-  // TODO: remove debug logs
   switch (action.type) {
     case ECollectionActions.REFRESH_COLLECTION_SUCCESS:
-      console.log(action.payload);
-
       return {
         ...state,
         collection: action.payload,
       };
     
     case ECollectionActions.REFRESH_COLLECTION_ERROR:
-      console.log('error action');
-      console.log(action.payload);
+      alert('Refresh collection error');
+      console.error(action.payload);
     
       return state;
 
     case ECollectionActions.SAVE_COLLECTION_SUCCESS:
-      console.log(action.payload);
-
       return {
         ...state,
         collection: action.payload,
       };
 
     case ECollectionActions.SAVE_COLLECTION_ERROR:
-      console.log('error action');
-      console.log(action.payload);
+      alert('Save collection error');
+      console.error(action.payload);
 
       return state;
 
@@ -56,24 +51,20 @@ export function collectionReducer(
         }
       }
 
-      console.log(collection);
-
       return {
         ...state,
         collection: collection,
       };
 
     case ECollectionActions.ADD_TO_COLLECTION_ERROR:
-      console.log('error action');
-      console.log(action.payload);
+      alert('Add to collection error');
+      console.error(action.payload);
   
       return state;
 
     case ECollectionActions.REMOVE_FROM_COLLECTION:
       collection = JSON.parse(JSON.stringify(state.collection));
       delete collection[action.payload.id];
-
-      console.log(collection);
 
       return {
         ...state,
@@ -86,8 +77,6 @@ export function collectionReducer(
         collection[action.payload.tv_show_id].episodes[episode.id] = true;
       }
 
-      console.log(collection);
-
       return {
         ...state,
         collection: collection,
@@ -98,8 +87,6 @@ export function collectionReducer(
       for (let episode of action.payload.episodes) {
         collection[action.payload.tv_show_id].episodes[episode.id] = false;
       }
-
-      console.log(collection);
 
       return {
         ...state,
@@ -114,8 +101,6 @@ export function collectionReducer(
         collection[action.payload.id].episodes[episodeKey] = true;
       }
 
-      console.log(collection);
-
       return {
         ...state,
         collection: collection,
@@ -129,8 +114,6 @@ export function collectionReducer(
         collection[action.payload.id].episodes[episodeKey] = false;
       }
 
-      console.log(collection);
-
       return {
         ...state,
         collection: collection,
@@ -140,8 +123,6 @@ export function collectionReducer(
       collection = JSON.parse(JSON.stringify(state.collection));
       collection[action.payload.tv_show_id].episodes[action.payload.id] = true;
 
-      console.log(collection);
-
       return {
         ...state,
         collection: collection,
@@ -150,8 +131,6 @@ export function collectionReducer(
     case ECollectionActions.MARK_EPISODE_AS_UNSEEN:
       collection = JSON.parse(JSON.stringify(state.collection));
       collection[action.payload.tv_show_id].episodes[action.payload.id] = false;
-
-      console.log(collection);
 
       return {
         ...state,

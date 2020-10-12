@@ -111,8 +111,6 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   removeFromCollection(id: number): void {
     if (!!this.tvShowDict && !!this.tvShowDict[id]) {
-      /*delete this.tvShowDict[id];
-      localStorage.setItem('collection', JSON.stringify(this.tvShowDict));*/
       this.store.dispatch(new RemoveFromCollectionAction({ id: id, name: '' }));
     }
     this.refreshCollection();

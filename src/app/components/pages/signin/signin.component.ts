@@ -14,6 +14,7 @@ import { UserProfile } from 'src/app/domain/UserProfile';
 export class SignInComponent implements OnInit {
   login: LoginData;
   user: UserProfile;
+  error: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -25,19 +26,19 @@ export class SignInComponent implements OnInit {
     if (this.authService.isAuthenticated()) {
       this.authService.logout();
     }
-    console.log(JSON.stringify(this.login));
     this.authService.authenticate(this.login).subscribe(
       (loginResult) => {
         localStorage.setItem(
           AppConstants.LOGIN_STORAGE,
           JSON.stringify(loginResult)
         );
-        console.log(loginResult);
+        if(this.error) {
+          this.error = false;
+        }
         this.router.navigate(['account']);
       },
       (error) => {
-        console.log('error');
-        console.log(error);
+        this.error = true;
       }
     );
   }
