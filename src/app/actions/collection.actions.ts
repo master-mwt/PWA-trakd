@@ -8,10 +8,13 @@ import { TvShowPreview } from '../domain/TvShowPreview';
 export enum ECollectionActions {
   REFRESH_COLLECTION = 'REFRESH_COLLECTION',
   REFRESH_COLLECTION_SUCCESS = 'REFRESH_COLLECTION_SUCCESS',
+  REFRESH_COLLECTION_ERROR = 'REFRESH_COLLECTION_ERROR',
   SAVE_COLLECTION = 'SAVE_COLLECTION',
   SAVE_COLLECTION_SUCCESS = 'SAVE_COLLECTION_SUCCESS',
+  SAVE_COLLECTION_ERROR = 'SAVE_COLLECTION_ERROR',
   ADD_TO_COLLECTION = 'ADD_TO_COLLECTION',
   ADD_TO_COLLECTION_SUCCESS = 'ADD_TO_COLLECTION_SUCCESS',
+  ADD_TO_COLLECTION_ERROR = 'ADD_TO_COLLECTION_ERROR',
   REMOVE_FROM_COLLECTION = 'REMOVE_FROM_COLLECTION',
   MARK_ALL_SEASON_EPISODES_AS_SEEN = 'MARK_ALL_SEASON_EPISODES_AS_SEEN',
   MARK_ALL_SEASON_EPISODES_AS_UNSEEN = 'MARK_ALL_SEASON_EPISODES_AS_UNSEEN',
@@ -30,6 +33,11 @@ export class RefreshCollectionSuccessAction implements Action {
   constructor(public payload: Collection) {}
 }
 
+export class RefreshCollectionErrorAction implements Action {
+  readonly type = ECollectionActions.REFRESH_COLLECTION_ERROR;
+  constructor(public payload: any) {}
+}
+
 export class SaveCollectionAction implements Action {
   readonly type = ECollectionActions.SAVE_COLLECTION;
   constructor(public payload: Collection) {}
@@ -38,6 +46,11 @@ export class SaveCollectionAction implements Action {
 export class SaveCollectionSuccessAction implements Action {
   readonly type = ECollectionActions.SAVE_COLLECTION_SUCCESS;
   constructor(public payload: Collection) {}
+}
+
+export class SaveCollectionErrorAction implements Action {
+  readonly type = ECollectionActions.SAVE_COLLECTION_ERROR;
+  constructor(public payload: any) {}
 }
 
 export class AddToCollectionAction implements Action {
@@ -85,11 +98,18 @@ export class AddToCollectionSuccessAction implements Action {
   constructor(public payload: Season[]) {}
 }
 
+export class AddToCollectionErrorAction implements Action {
+  readonly type = ECollectionActions.ADD_TO_COLLECTION_ERROR;
+  constructor(public payload: any) {}
+}
+
 export type ALL_REDUCER_ACTIONS =
   | RefreshCollectionAction
   | RefreshCollectionSuccessAction
+  | RefreshCollectionErrorAction
   | SaveCollectionAction
   | SaveCollectionSuccessAction
+  | SaveCollectionErrorAction
   | AddToCollectionAction
   | RemoveFromCollectionAction
   | MarkAllSeasonEpisodesAsSeenAction
@@ -98,4 +118,5 @@ export type ALL_REDUCER_ACTIONS =
   | MarkAllTvShowEpisodesAsNotSeenAction
   | MarkEpisodeAsSeenAction
   | MarkEpisodeAsNotSeenAction
-  | AddToCollectionSuccessAction;
+  | AddToCollectionSuccessAction
+  | AddToCollectionErrorAction;

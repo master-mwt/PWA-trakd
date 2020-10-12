@@ -20,6 +20,12 @@ export function collectionReducer(
         ...state,
         collection: action.payload,
       };
+    
+    case ECollectionActions.REFRESH_COLLECTION_ERROR:
+      console.log('error action');
+      console.log(action.payload);
+    
+      return state;
 
     case ECollectionActions.SAVE_COLLECTION_SUCCESS:
       console.log(action.payload);
@@ -28,6 +34,12 @@ export function collectionReducer(
         ...state,
         collection: action.payload,
       };
+
+    case ECollectionActions.SAVE_COLLECTION_ERROR:
+      console.log('error action');
+      console.log(action.payload);
+
+      return state;
 
     case ECollectionActions.ADD_TO_COLLECTION_SUCCESS:
       collection = JSON.parse(JSON.stringify(state.collection));
@@ -50,6 +62,12 @@ export function collectionReducer(
         ...state,
         collection: collection,
       };
+
+    case ECollectionActions.ADD_TO_COLLECTION_ERROR:
+      console.log('error action');
+      console.log(action.payload);
+  
+      return state;
 
     case ECollectionActions.REMOVE_FROM_COLLECTION:
       collection = JSON.parse(JSON.stringify(state.collection));

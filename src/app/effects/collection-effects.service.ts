@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError, repeat } from 'rxjs/operators';
 import {
   AddToCollectionAction,
+  AddToCollectionErrorAction,
   AddToCollectionSuccessAction,
   ECollectionActions,
   RefreshCollectionAction,
+  RefreshCollectionErrorAction,
   RefreshCollectionSuccessAction,
   SaveCollectionAction,
+  SaveCollectionErrorAction,
   SaveCollectionSuccessAction,
 } from '../actions/collection.actions';
 import { Collection } from '../domain/Collection';
@@ -40,7 +43,11 @@ export class CollectionEffects {
     }),
     switchMap((seasons: Season[]) =>
       of(new AddToCollectionSuccessAction(seasons))
-    )
+    ),
+    catchError((error) => {
+      return of(new AddToCollectionErrorAction(error));
+    }),
+    repeat(),
   );
 
   @Effect()
@@ -49,7 +56,11 @@ export class CollectionEffects {
     switchMap(() => this.localserverService.getUserCollection()),
     switchMap((collection: Collection) =>
       of(new RefreshCollectionSuccessAction(collection))
-    )
+    ),
+    catchError((error) => {
+      return of(new RefreshCollectionErrorAction(error));
+    }),
+    repeat(),
   );
 
   @Effect()
@@ -60,6 +71,10 @@ export class CollectionEffects {
     ),
     switchMap((collection: Collection) =>
       of(new SaveCollectionSuccessAction(collection))
-    )
+    ),
+    catchError((error) => {
+      return of(new SaveCollectionErrorAction(error));
+    }),
+    repeat(),
   );
 }

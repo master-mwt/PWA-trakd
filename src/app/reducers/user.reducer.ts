@@ -15,6 +15,12 @@ export function userReducer(
         user: action.payload,
       };
 
+    case EUserActions.REFRESH_USER_ERROR:
+      console.log('error action');
+      console.log(action.payload);
+    
+      return state;
+
     case EUserActions.UPDATE_USER_SUCCESS:
       console.log(action.payload);
 
@@ -22,6 +28,12 @@ export function userReducer(
         ...state,
         user: action.payload,
       };
+
+    case EUserActions.UPDATE_USER_ERROR:
+      console.log('error action');
+      console.log(action.payload);
+    
+      return state;
 
     default:
       return state;
