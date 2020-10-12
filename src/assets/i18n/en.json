@@ -41,11 +41,11 @@
   "search": "search",
   "page_not_found": "page not found",
   "progress": "progress",
-  "info_text": "trakd is an application that allows you to keep track of the TV series you have watched.\ntrakd is a completely free tracker app and does not require any account. trakd does not provide for any form of registration and provides its functions completely free to end users.\nAdd your favorite TV series to your collection, mark the episodes you have watched and take advantage of the minimal synchronization service provided by the application.\nIn the \"Backup\" section you can export and import the backup of your collection, you will find the instructions on the page.\nbrowse freely between TV series, find your favorite shows and discover new ones.\ntrakd uses the remote api service offered by tmdb to build its huge catalog of tv shows.",
-  "backup_import_text": "Click on the \"import backup\" button to synchronize your personal collection.\nSelect the backup file in json format that you previously exported and, at the end of the upload, your collection will be synchronized.\nTo export the backup file click on \"export backup\", wait for the file to be saved and keep it on your computer.",
+  "info_text": "Trakd is an application that allows you to keep track of the TV Shows you have watched. Trakd is a completely free tracking app and does not require any account. Trakd does not provide any form of registration and makes its features available completely free to end users. Add your favorite TV Shows to your collection, mark the episodes you have watched and take advantage of the minimal synchronization service provided by the application. In the \"Backup\" section you can import and export the backup of you collection, you will find the instructions on the page. Browse freely between TV Shows, find you favorites and discover new ones. Trakd uses the remote API service offered by TMDB to build its huge TV Shows catalog.",
+  "backup_import_text": "Click on \"import backup\" to synchronize your personal collection. NOTE: The import operation overwrites any changes made to the personal collection not previously exported. To export the collection status, click \"export backup\".",
   "import_backup": "import backup",
-  "backup_export_text": "click on the \"export backup\" button to save the status of your personal collection.\na file in json format will be generated that you can keep on your computer.\nto import a backup file and re-synchronize your collection within the application, click on the \"import backup\" button, select the previously exported backup file and wait for the upload to finish.",
+  "backup_export_text": "Click on \"export backup\" to synchronize the status of your personal collection. NOTE: the export operation updates the collection status, to import the changes and re-synchronize the collection to the last backup, click on \"import backup\"",
   "export_backup": "export backup",
-  "Genres": "Genres",
-  "sorting_types": "Sorting types"
+  "Genres": "genres",
+  "sorting_types": "sorting types"
 }

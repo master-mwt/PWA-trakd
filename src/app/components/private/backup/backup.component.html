@@ -1,6 +1,6 @@
 <div class="container py-4">
   <div class="row mb-4 justify-content-center">
-    <div class="col rounded bg-dark text-light p-3 text-center">
+    <!-- <div class="col rounded bg-dark text-light p-3 text-center">
       <h5><fa-icon [icon]="faSServer" class="mr-2"></fa-icon>LOG</h5>
       <div
         id="log_container"
@@ -13,32 +13,33 @@
         <span id="log_message">{{ log_message }}</span>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <div class="row mb-3 justify-content-center">
-    <div class="col rounded bg-secondary text-light p-3 text-center">
-      <h6>
-        {{ "backup_import_text" | translate }}
-      </h6>
+    <div class="row mb-3 justify-content-center">
+      <div class="col rounded bg-secondary text-light p-3 text-center">
+        <h6>
+          {{ "backup_import_text" | translate }}
+        </h6>
+      </div>
     </div>
-  </div>
-  <div class="row mb-4 justify-content-center">
-    <button type="button" class="btn btn-dark" (click)="restore()">
-      <fa-icon class="mr-2" [icon]="faSFileUpload"></fa-icon>
-      {{ "import_backup" | translate }}
-    </button>
-  </div>
-  <div class="row mb-3 justify-content-center">
-    <div class="col rounded bg-secondary text-light p-3 text-center">
-      <h6>
-        {{ "backup_export_text" | translate }}
-      </h6>
+    <div class="row mb-4 justify-content-center">
+      <button type="button" class="btn btn-dark" (click)="restore()">
+        <fa-icon class="mr-2" [icon]="faSFileUpload"></fa-icon>
+        {{ "import_backup" | translate }}
+      </button>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    <button type="button" class="btn btn-dark" (click)="backup()">
-      <fa-icon class="mr-2" [icon]="faSFileDownload"></fa-icon>
-      {{ "export_backup" | translate }}
-    </button>
+    <div class="row mb-3 justify-content-center">
+      <div class="col rounded bg-secondary text-light p-3 text-center">
+        <h6>
+          {{ "backup_export_text" | translate }}
+        </h6>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <button type="button" class="btn btn-dark" (click)="backup()">
+        <fa-icon class="mr-2" [icon]="faSFileDownload"></fa-icon>
+        {{ "export_backup" | translate }}
+      </button>
+    </div>
   </div>
 </div>

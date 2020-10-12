@@ -41,11 +41,11 @@
   "search": "cerca",
   "page_not_found": "pagina non trovata",
   "progress": "progresso",
-  "info_text": "trakd è un'applicazione che ti permette di seguire le tue serie tv preferite.\ntrakd è completamente gratis e non richiede nessun account. trakd non fornisce alcun form di registrazione e fornisce le sue funzionalità completamente gratis per l'utente finale.\nAggiungi le tue serie tv preferite alla tua collezione, segna gli episodi che hai visto e sfrutta il servizio di sincronizzazione minimale fornito dall'applicazione.\nNella sezione \"Backup\" puoi esportare la tua collezione, troverai le istruzioni sulla pagina, naviga liberamente tra le serie tv, trova le tue preferite e scoprine delle altre.\ntrakd usa il servizio di api remota offerto da tmdb per costruire il suo grande catalogo di serie tv.",
-  "backup_import_text": "Clicca su \"importa backup\" per sincronizzare la tua collezione personale.\nSeleziona il file di backup in formato json che hai precedentemente esporato e, al termine dell'upload, la tua collezione sarà sincronizzata.\nPer esportare il file di backup clicca su \"esporta backup\", attendi che il file sia salvato e lascialo sul tuo computer.",
+  "info_text": "Trakd è un'applicazione che ti permette di tenere traccia delle Serie TV che hai guardato. Trakd è un tracker completamente gratuito e non richiede alcun account. Trakd non prevede alcuna forma di registrazione e mette a disposizione degli utenti finali le proprie funzionalità in modo completamente gratuito. Aggiungi le tue Serie TV preferite alla collezione, segna gli episodi che hai guardato e approfitta del servizio di sincronizzazione minimale fornito dall'applicazione. Nella sezione \"Backup\" puoi importare ed esportare il backup della tua collezione, troverai le istruzioni all'interno della pagina. Naviga liberamente tra le Serie TV, trova le tue preferite e scoprine di nuove. Trakd usa il servizio API remoto offerto da TMDB per costruire il suo enorme catalogo di Serie TV.",
+  "backup_import_text": "Clicca su \"importa backup\" per sincronizzare la tua collezione personale. NOTA: l'operazione di importazione sovrascrive tutti i cambiamenti apportati alla collezione personale non precedentemente esportati. Per esportare lo stato della collezione, clicca \"esporta backup\"",
   "import_backup": "importa backup",
-  "backup_export_text": "Clicca su \"export backup\" per salvare lo stato della tua collezione personale, un file in formato json verrà generato e potrai lasciarlo sul tuo computer.\nper importare il file di backup e ri-sincronizzare la tua collezione nell'applicazione, clicca su \"importa backup\", selezione il file di backup precedentemente esportato e attendi che l'upload finisca. ",
+  "backup_export_text": "Clicca su \"esporta backup\" per sincronizzare lo stato della collezione personale. NOTA: l'operazione di esportazione aggiorna lo stato della collezione, per importare i cambiamenti e ri-sincronizzare la collezione all'ultimo backup, clicca su \"importa backup\"",
   "export_backup": "esporta backup",
-  "Genres": "Generi",
-  "sorting_types": "Ordinamento"
+  "Genres": "generi",
+  "sorting_types": "ordinamento"
 }

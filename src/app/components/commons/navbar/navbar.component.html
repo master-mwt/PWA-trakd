@@ -85,30 +85,30 @@
             {{ "navbar_collection" | translate }}
           </a>
         </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <li *ngIf="!!user" class="nav-item">
-          <a [routerLink]="['account']" class="nav-link">
-            <fa-icon [icon]="faSUser" class="mr-1"></fa-icon>
-            {{ user.username }}
-          </a>
-        </li>
-        <li *ngIf="!user" class="nav-item">
-          <a [routerLink]="['account']" class="nav-link">
-            <fa-icon [icon]="faSUser" class="mr-1"></fa-icon>
-            {{ "navbar_guest" | translate }}
-          </a>
-        </li>
         <li *ngIf="!!user" class="nav-item">
           <a [routerLink]="['private/backup']" class="nav-link">
             <fa-icon [icon]="faSSave" class="mr-1"></fa-icon>
             {{ "navbar_backup" | translate }}
           </a>
         </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a [routerLink]="['info']" class="nav-link">
             <fa-icon [icon]="faSInfoCircle" class="mr-1"></fa-icon>
             {{ "navbar_info" | translate }}
+          </a>
+        </li>
+        <li *ngIf="!!user" class="nav-item">
+          <a [routerLink]="['account']" class="nav-link">
+            <fa-icon [icon]="faSUserCircle" class="mr-1"></fa-icon>
+            {{ user.username }}
+          </a>
+        </li>
+        <li *ngIf="!user" class="nav-item">
+          <a [routerLink]="['account']" class="nav-link">
+            <fa-icon [icon]="faSUserCircle" class="mr-1"></fa-icon>
+            {{ "navbar_guest" | translate }}
           </a>
         </li>
 
