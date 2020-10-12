@@ -266,17 +266,17 @@
   <div class="container mb-3">
     <div class="row text-center justify-content-center">
       <div *ngFor="let t of tvShowPreviews" class="p-2 text-center">
-        <div class="tv-show-card card bg-dark text-light hvr-grow">
+        <div class="tv-show-card card bg-dark text-light">
           <div class="card-header p-1 m-0 border-0">
-            <a routerLink="/discover/{{ t.id }}/details">
-              <img
-                src="{{ t.poster_path }}"
-                alt="card-poster"
-                class="card-poster-img rounded"
-                width="100%"
-                height="200px"
-              />
-            </a>
+            <!-- <a routerLink="/discover/{{ t.id }}/details"> -->
+            <img
+              src="{{ t.poster_path }}"
+              alt="card-poster"
+              class="card-poster-img rounded"
+              width="100%"
+              height="200px"
+            />
+            <!-- </a> -->
           </div>
           <div class="card-body p-2 border-0">
             <h6 class="card-title text-truncate m-0">{{ t.name }}</h6>
