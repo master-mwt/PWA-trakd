@@ -8,7 +8,7 @@
           alt="not_found_face"
           width="100px"
         />
-        <h5 *ngIf="!user" class="text-center mb-4">guest</h5>
+        <h5 *ngIf="!user" class="text-center mb-4">{{ 'navbar_guest' | translate }}</h5>
         <h5 *ngIf="!!user" class="text-center mb-4">{{ user.username }}</h5>
         <a
           *ngIf="!!user"
@@ -16,7 +16,7 @@
           class="btn btn-primary mx-auto mb-2"
           role="button"
           style="min-width: 200px"
-          >Profile</a
+          >{{ 'profile' | translate }}</a
         >
         <a
           *ngIf="!user"
@@ -24,7 +24,7 @@
           class="btn btn-dark mx-auto mb-2"
           role="button"
           style="min-width: 200px"
-          >Sign in</a
+          >{{ 'sign_in' | translate }}</a
         >
         <a
           *ngIf="!!user"
@@ -32,14 +32,14 @@
           class="btn btn-dark mx-auto mb-2 disabled"
           role="button"
           style="min-width: 200px"
-          >Sign in</a
+          >{{ 'sign_in' | translate }}</a
         >
         <a
           [routerLink]="['/signup']"
           class="btn btn-dark mx-auto mb-2"
           role="button"
           style="min-width: 200px"
-          >Sign up</a
+          >{{ 'sign_up' | translate }}</a
         >
         <button
           *ngIf="!!user"
@@ -47,7 +47,7 @@
           (click)="logout()"
           style="min-width: 200px"
         >
-          Logout
+          {{ 'navbar_logout' | translate }}
         </button>
       </div>
     </div>

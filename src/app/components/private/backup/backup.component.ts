@@ -21,8 +21,8 @@ import { selectCollection } from 'src/app/selectors/collection.selector';
   styleUrls: ['./backup.component.css'],
 })
 export class BackupComponent implements OnInit, OnDestroy {
-  log_status: string = 'waiting';
-  log_message: string = 'idle';
+  imported: boolean = false;
+  exported: boolean = false;
 
   collection: Collection;
 
@@ -60,7 +60,10 @@ export class BackupComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.imported = false;
+    this.exported = false;
+  }
 
   ngOnDestroy(): void {
     this.langChangeSubscription.unsubscribe();
@@ -69,78 +72,15 @@ export class BackupComponent implements OnInit, OnDestroy {
 
   backup(): void {
     this.store.dispatch(new SaveCollectionAction(this.collection));
+    this.imported = false;
+    this.exported = true;
   }
 
   restore(): void {
     this.store.dispatch(new RefreshCollectionAction());
+    this.imported = true;
+    this.exported = false;
   }
-
-  /*fileChanged(e: Event): void {
-    if (
-      (e.target as HTMLInputElement).files &&
-      (e.target as HTMLInputElement).files.length
-    ) {
-      $('#log_container').css('background-color', '#0275d8');
-      this.log_status = 'LOADING';
-      this.log_message = 'importing...';
-      let restoreFile = (e.target as HTMLInputElement).files[0];
-
-      let fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        if (fileReader.result && restoreFile.type === 'application/json') {
-          try {
-            let restoredData: Collection = JSON.parse(
-              fileReader.result.toString()
-            );
-            if (!this.parseCollection(restoredData)) {
-              $('#log_container').css('background-color', '#d9534f');
-              this.log_status = 'ERROR';
-              this.log_message =
-                'parse error [not a valid json collection structure]';
-              return;
-            }
-          } catch (e) {
-            $('#log_container').css('background-color', '#d9534f');
-            this.log_status = 'ERROR';
-            this.log_message = 'extension error [not a json file]';
-            return;
-          }
-
-          localStorage.setItem('collection', fileReader.result.toString());
-          $('#log_container').css('background-color', '#5cb85c');
-          this.log_status = 'SUCCESS';
-          this.log_message = 'collection imported';
-        } else {
-          $('#log_container').css('background-color', '#d9534f');
-          this.log_status = 'ERROR';
-          this.log_message = 'import failed';
-        }
-      };
-      fileReader.readAsText(restoreFile);
-    }
-  }*/
-
-  /*parseCollection(collection: Collection): boolean {
-    for (let key of Object.keys(collection)) {
-      if (!Number(key)) {
-        return false;
-      }
-      for (let innerKey of Object.keys(collection[key])) {
-        if (innerKey !== 'episodes') {
-          return false;
-        }
-        for (let episodeId of Object.keys(collection[key].episodes)) {
-          if (
-            !Number(episodeId) ||
-            !_.isBoolean(collection[key].episodes[episodeId])
-          ) {
-            return false;
-          }
-        }
-      }
-    }
-    return true;
-  }*/
 
   // icons
   faSFileUpload = faSFileUpload;

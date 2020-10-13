@@ -15,6 +15,13 @@
     </div>
   </div> -->
 
+    <div *ngIf="imported" class="alert alert-info" role="alert">
+      {{ 'backup_import_message_alert' | translate }}
+    </div>
+    <div *ngIf="exported" class="alert alert-info" role="alert">
+      {{ 'backup_export_message_alert' | translate }}
+    </div>
+
     <div class="row mb-3 justify-content-center">
       <div class="col rounded bg-secondary text-light p-3 text-center">
         <h6>

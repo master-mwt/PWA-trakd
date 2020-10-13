@@ -9,7 +9,7 @@
   "navbar_backup": "backup",
   "navbar_info": "info",
   "navbar_profile": "profile",
-  "navbar_logout": "logout",
+  "navbar_logout": "Logout",
   "navbar_signup": "sign up",
   "navbar_account": "account",
   "navbar_guest": "guest",
@@ -47,5 +47,18 @@
   "backup_export_text": "Click on \"export backup\" to synchronize the status of your personal collection. NOTE: the export operation updates the collection status, to import the changes and re-synchronize the collection to the last backup, click on \"import backup\"",
   "export_backup": "export backup",
   "Genres": "genres",
-  "sorting_types": "sorting types"
+  "sorting_types": "sorting types",
+  "sign_in": "Sign in",
+  "sign_in_error": "Sign in error",
+  "sign_up": "Sign up",
+  "sign_up_error": "Sign up error",
+  "username": "Username",
+  "password": "Password",
+  "name": "Name",
+  "surname": "Surname",
+  "profile": "Profile",
+  "update_profile": "Update profile",
+  "update": "Update",
+  "backup_import_message_alert": "Import collection from server",
+  "backup_export_message_alert": "Export collection to server"
 }

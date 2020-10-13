@@ -12,16 +12,16 @@
         </div>
         <div class="text-center">
           <p *ngIf="user">
-            <span class="text-muted mr-3">username</span>{{ user.username }}
+            <span class="text-muted mr-3">{{ 'username' | translate }}</span>{{ user.username }}
           </p>
           <p *ngIf="user">
-            <span class="text-muted mr-3">name</span>{{ user.name }}
+            <span class="text-muted mr-3">{{ 'name' | translate }}</span>{{ user.name }}
           </p>
           <p *ngIf="user">
-            <span class="text-muted mr-3">surname</span>{{ user.surname }}
+            <span class="text-muted mr-3">{{ 'surname' | translate }}</span>{{ user.surname }}
           </p>
           <button (click)="wantUpdate()" class="btn btn-primary btn-block mt-2">
-            Update profile
+            {{ 'update_profile' | translate }}
           </button>
         </div>
         <app-profile-update

@@ -9,7 +9,7 @@
   "navbar_backup": "backup",
   "navbar_info": "info",
   "navbar_profile": "profilo",
-  "navbar_logout": "logout",
+  "navbar_logout": "Logout",
   "navbar_signup": "registrati",
   "navbar_account": "account",
   "navbar_guest": "ospite",
@@ -47,5 +47,18 @@
   "backup_export_text": "Clicca su \"esporta backup\" per sincronizzare lo stato della collezione personale. NOTA: l'operazione di esportazione aggiorna lo stato della collezione, per importare i cambiamenti e ri-sincronizzare la collezione all'ultimo backup, clicca su \"importa backup\"",
   "export_backup": "esporta backup",
   "Genres": "generi",
-  "sorting_types": "ordinamento"
+  "sorting_types": "ordinamento",
+  "sign_in": "Login",
+  "sign_in_error": "Errore nel login",
+  "sign_up": "Registrati",
+  "sign_up_error": "Errore nella registrazione",
+  "username": "Nome utente",
+  "password": "Password",
+  "name": "Nome",
+  "surname": "Cognome",
+  "profile": "Profilo",
+  "update_profile": "Aggiorna profilo",
+  "update": "Aggiorna",
+  "backup_import_message_alert": "Import della collezione dal server",
+  "backup_export_message_alert": "Export della collezione al server"
 }

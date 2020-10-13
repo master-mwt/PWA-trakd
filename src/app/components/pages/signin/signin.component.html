@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col mx-1">
       <div class="col mx-auto" style="max-width: 500px">
-        <h3 class="text-center mb-3">sign in</h3>
+        <h3 class="text-center mb-3">{{ 'sign_in' | translate }}</h3>
         <div *ngIf="error" class="alert alert-danger" role="alert">
-          Sign in error
+          {{ 'sign_in_error' | translate }}
         </div>
         <form #f="ngForm" (ngSubmit)="submit()">
           <input
             class="form-control mb-3"
-            placeholder="Username"
+            placeholder="{{ 'username' | translate }}"
             type="text"
             id="username"
             [(ngModel)]="login.username"
@@ -18,7 +18,7 @@
           />
           <input
             class="form-control mb-3"
-            placeholder="Password"
+            placeholder="{{ 'password' | translate }}"
             type="password"
             id="password"
             [(ngModel)]="login.password"
@@ -30,7 +30,7 @@
             type="submit"
             [disabled]="f.invalid"
           >
-            Submit
+            {{ 'sign_in' | translate }}
           </button>
         </form>
       </div>

@@ -1,18 +1,18 @@
 <form [formGroup]="profileForm" (ngSubmit)="update()">
   <div class="mt-3 d-flex flex-column">
-    <label for="name">Name</label>
+    <label for="name">{{ 'name' | translate }}</label>
     <input
       class="form-control mb-3"
       type="text"
       formControlName="name"
-      placeholder="Name"
+      placeholder="{{ 'name' | translate }}"
     />
-    <label for="surname">Surname</label>
+    <label for="surname">{{ 'surname' | translate }}</label>
     <input
       class="form-control mb-4"
       type="text"
       formControlName="surname"
-      placeholder="Surname"
+      placeholder="{{ 'surname' | translate }}"
     />
   </div>
   <button
@@ -20,6 +20,6 @@
     class="btn btn-success btn-block"
     [disabled]="!profileForm.valid"
   >
-    Update
+    {{ 'update' | translate }}
   </button>
 </form>
