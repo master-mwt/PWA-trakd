@@ -34,6 +34,8 @@ import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { UserEffects } from './effects/user-effects.service';
 import { SignUpComponent } from './components/pages/signup/signup.component';
 import { AccountComponent } from './components/pages/account/account.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function tokenGetter() {
   const loginStored: LoginResult = JSON.parse(
@@ -82,6 +84,7 @@ export function tokenGetter() {
         tokenGetter,
       },
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {
